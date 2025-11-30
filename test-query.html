@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Supabase Query</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Test Supabase Query</h1>
+    <button onclick="testQuery()">Test Query</button>
+    <pre id="result"></pre>
+
+    <script>
+        const SUPABASE_URL = 'https://wfrxwfbslhkkzkexyilx.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indmcnh3ZmJzbGhra3prZXh5aWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMyMTU3MDksImV4cCI6MjA3ODc5MTcwOX0.OReke5zQtxdPmpxVUHEwYIiXPsKERAWUoE4J2jMdyQQ'
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+        async function testQuery() {
+            const resultEl = document.getElementById('result')
+            resultEl.textContent = 'Loading...'
+
+            try {
+                // Test 1: Simple query without joins
+                console.log('Test 1: Simple query')
+                const { data: simple, error: simpleError, count: simpleCount } = await supabase
+                    .from('tenants')
+                    .select('*', { count: 'exact' })
+
+                console.log('Simple query result:', { data: simple, error: simpleError, count: simpleCount })
+
+                // Test 2: Query with neurocore join only
+                console.log('Test 2: With neurocore join')
+                const { data: withNeurocore, error: neurocoreError } = await supabase
+                    .from('tenants')
+                    .select(`
+                        *,
+                        neurocore:neurocores!neurocore_id(
+                            id,
+                            name,
+                            is_active
+                        )
+                    `)
+
+                console.log('With neurocore:', { data: withNeurocore, error: neurocoreError })
+
+                // Test 3: Query with both joins (old way)
+                console.log('Test 3: With both joins (old way)')
+                const { data: oldWay, error: oldError } = await supabase
+                    .from('tenants')
+                    .select(`
+                        *,
+                        neurocore:neurocores!neurocore_id(
+                            id,
+                            name,
+                            is_active
+                        ),
+                        niche:niches!niche_id(
+                            id,
+                            name
+                        )
+                    `)
+
+                console.log('Old way:', { data: oldWay, error: oldError })
+
+                // Test 4: Query with both joins (new way)
+                console.log('Test 4: With both joins (new way)')
+                const { data: newWay, error: newError } = await supabase
+                    .from('tenants')
+                    .select(`
+                        *,
+                        neurocore:neurocores!neurocore_id(
+                            id,
+                            name,
+                            is_active
+                        ),
+                        niche:niches(
+                            id,
+                            name
+                        )
+                    `)
+
+                console.log('New way:', { data: newWay, error: newError })
+
+                resultEl.textContent = JSON.stringify({
+                    test1_simple: { count: simpleCount, data: simple, error: simpleError },
+                    test2_neurocore: { count: withNeurocore?.length, data: withNeurocore, error: neurocoreError },
+                    test3_old: { count: oldWay?.length, data: oldWay, error: oldError },
+                    test4_new: { count: newWay?.length, data: newWay, error: newError }
+                }, null, 2)
+
+            } catch (err) {
+                console.error('Error:', err)
+                resultEl.textContent = 'Error: ' + err.message
+            }
+        }
+    </script>
+</body>
+</html>
