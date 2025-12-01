@@ -1,0 +1,1060 @@
+{
+  "exported_at": "2025-11-30T23:45:53.237Z",
+  "database_url": "https://wfrxwfbslhkkzkexyilx.supabase.co",
+  "total_tables": 21,
+  "tables": {
+    "synapses": {
+      "row_count": 6,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "cf606f4f-e51b-4681-b3fc-74ecbd964d92"
+        },
+        "base_conhecimento_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "b500762c-8f8a-4602-a0c3-b2d97ecad3e8"
+        },
+        "tenant_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d23e15bb-5294-4f33-905e-f1565ba6022d"
+        },
+        "title": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Política de Devolução"
+        },
+        "description": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Regras para devolução de produtos"
+        },
+        "image_url": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "status": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "draft"
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T14:48:25.357024+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-19T01:00:38.677787+00:00"
+        },
+        "content": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Aceitamos devoluções em até 30 dias após a compra. O produto deve estar em perfeito estado, sem uso, com etiquetas e embalagem original."
+        },
+        "is_enabled": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        }
+      },
+      "column_count": 11
+    },
+    "contacts": {
+      "row_count": 25,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "dad7d9e6-1a7f-458b-9fa3-e0df17f4a36f"
+        },
+        "tenant_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d23e15bb-5294-4f33-905e-f1565ba6022d"
+        },
+        "name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "João Silva"
+        },
+        "phone": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "+5511911111111"
+        },
+        "phone_secondary": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "email": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "country": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "city": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "zip_code": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "address_street": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "address_number": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "address_complement": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "cpf": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "rg": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "last_interaction_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T14:48:23.367+00:00"
+        },
+        "status": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "open"
+        },
+        "customer_data_extracted": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "last_negotiation": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T14:48:23.639234+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T14:48:23.639234+00:00"
+        },
+        "external_identification_contact": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "external_contact_id": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "tag": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        }
+      },
+      "column_count": 23
+    },
+    "conversation_reactivations_settings": {
+      "row_count": 0,
+      "columns": {
+        "_empty": {
+          "note": "Tabela vazia, estrutura não disponível"
+        }
+      },
+      "column_count": 1
+    },
+    "neurocores": {
+      "row_count": 3,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d9d3f30f-d36b-4f39-8468-e3e65fe955c9"
+        },
+        "name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Neurocore Demo"
+        },
+        "description": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Neurocore de demonstração"
+        },
+        "id_subwork_n8n_neurocore": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "IPtwAsJ1ERtgIuEt"
+        },
+        "is_active": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T14:48:23.005913+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-21T20:33:10.77237+00:00"
+        }
+      },
+      "column_count": 7
+    },
+    "message_feedback": {
+      "row_count": 12,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d38c00f0-e922-41de-aaa2-c3a70becfd27"
+        },
+        "tenant_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d23e15bb-5294-4f33-905e-f1565ba6022d"
+        },
+        "message_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "73ac393b-1944-40c8-8f00-3822038b4e24"
+        },
+        "conversation_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "088cc19e-383e-4bed-b9a9-0991516b5e97"
+        },
+        "rating": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "negative"
+        },
+        "comment": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "ateindemitno ficou ruim"
+        },
+        "user_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "618ea8de-2231-4300-939e-8bf53301c2a0"
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-18T23:49:49.486554+00:00"
+        }
+      },
+      "column_count": 8
+    },
+    "channel_providers": {
+      "row_count": 1,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "076b2291-d532-41b0-8b41-a2f721e22ea5"
+        },
+        "name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Evolution API 2.3.6"
+        },
+        "description": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Evolution API "
+        },
+        "api_base_config": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T14:48:23.293378+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-21T20:06:26.861688+00:00"
+        },
+        "channel_provider_identifier_code": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "evolution_001"
+        },
+        "id_subwork_n8n_master_integrator": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "D9ttjvWYMf40Yd0i"
+        }
+      },
+      "column_count": 8
+    },
+    "base_conhecimentos": {
+      "row_count": 8,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "897fa151-16ac-4086-9621-224682968dd0"
+        },
+        "tenant_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d23e15bb-5294-4f33-905e-f1565ba6022d"
+        },
+        "name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "teste"
+        },
+        "description": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "teste"
+        },
+        "neurocore_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d9d3f30f-d36b-4f39-8468-e3e65fe955c9"
+        },
+        "is_active": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-19T13:58:26.03712+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-19T13:59:14.597844+00:00"
+        }
+      },
+      "column_count": 8
+    },
+    "niches": {
+      "row_count": 3,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "188d1ca8-6cb8-4c57-a816-921e0d9414d6"
+        },
+        "name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Escola"
+        },
+        "description": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T14:27:04.587885+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T14:27:04.587885+00:00"
+        }
+      },
+      "column_count": 5
+    },
+    "conversation_reasons_pauses_and_closures": {
+      "row_count": 0,
+      "columns": {
+        "_empty": {
+          "note": "Tabela vazia, estrutura não disponível"
+        }
+      },
+      "column_count": 1
+    },
+    "conversation_tags": {
+      "row_count": 109,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "0917454a-6eac-48f2-a678-4cfab969d738"
+        },
+        "conversation_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "4279da91-12d7-47cc-b7d1-ad6307a546ea"
+        },
+        "tag_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "c1228f91-2e1f-4250-beb6-81dd9e7c98ef"
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T20:08:33.057065+00:00"
+        }
+      },
+      "column_count": 4
+    },
+    "quick_reply_templates": {
+      "row_count": 70,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "4f5cd744-3fe1-4bbf-a344-a662608b8b36"
+        },
+        "tenant_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "31701213-794d-43c3-a74a-50d57fcd9d2b"
+        },
+        "title": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Perfeito"
+        },
+        "message": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Perfeito, vou te passar as informações"
+        },
+        "icon": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "✅"
+        },
+        "usage_count": {
+          "type": "number",
+          "nullable": false,
+          "sample_value": 1
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-26T14:53:53.161064+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-26T14:54:44.853323+00:00"
+        },
+        "active": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "created_by": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        }
+      },
+      "column_count": 10
+    },
+    "feature_modules": {
+      "row_count": 0,
+      "columns": {
+        "_empty": {
+          "note": "Tabela vazia, estrutura não disponível"
+        }
+      },
+      "column_count": 1
+    },
+    "feedbacks": {
+      "row_count": 0,
+      "columns": {
+        "_empty": {
+          "note": "Tabela vazia, estrutura não disponível"
+        }
+      },
+      "column_count": 1
+    },
+    "messages": {
+      "row_count": 871,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "e8f8b3b3-041b-4ca8-b324-990cf8eb55f2"
+        },
+        "conversation_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "bec67dce-8237-43f5-9260-a219f6d2307b"
+        },
+        "sender_type": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "attendant"
+        },
+        "sender_user_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "618ea8de-2231-4300-939e-8bf53301c2a0"
+        },
+        "sender_agent_id": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "content": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "oi"
+        },
+        "timestamp": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-18T00:01:07.737852+00:00"
+        },
+        "feedback_type": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "feedback_text": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-18T00:01:07.737852+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-18T00:01:07.737852+00:00"
+        },
+        "external_message_id": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "status": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "sent"
+        }
+      },
+      "column_count": 13
+    },
+    "agents": {
+      "row_count": 8,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "f1f2f567-975e-4a14-8cfe-8433204899f0"
+        },
+        "name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Signum - Fernando"
+        },
+        "type": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "intention"
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T15:34:17.539856"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T15:34:17.539856+00:00"
+        },
+        "id_neurocore": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "reactive": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        }
+      },
+      "column_count": 7
+    },
+    "tenants": {
+      "row_count": 3,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "31701213-794d-43c3-a74a-50d57fcd9d2b"
+        },
+        "name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "SIGNUM CURSOS E TREINAMENTO LTDA - ME"
+        },
+        "neurocore_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "e266d1f8-1cc1-4db2-b0f5-4d14c9e5e2b4"
+        },
+        "is_active": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "cnpj": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "52.968.628/0001-89"
+        },
+        "phone": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "5511945248552"
+        },
+        "responsible_tech_name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Sergio "
+        },
+        "responsible_tech_whatsapp": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "5511945248552"
+        },
+        "responsible_tech_email": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "signumdiretoria@gmail.com"
+        },
+        "responsible_finance_name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Sergio"
+        },
+        "responsible_finance_whatsapp": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "5511945248552"
+        },
+        "responsible_finance_email": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "signumdiretoria@gmail.com"
+        },
+        "plan": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": ""
+        },
+        "master_integration_active": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": false
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T14:22:10.284141+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T14:27:57.165123+00:00"
+        },
+        "niche_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "188d1ca8-6cb8-4c57-a816-921e0d9414d6"
+        }
+      },
+      "column_count": 17
+    },
+    "tags": {
+      "row_count": 3,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "c1228f91-2e1f-4250-beb6-81dd9e7c98ef"
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T18:27:37.708744+00:00"
+        },
+        "tag_name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Fechamento Presencial"
+        },
+        "id_tenant": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d23e15bb-5294-4f33-905e-f1565ba6022d"
+        },
+        "prompt_to_ai": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "active": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "order_index": {
+          "type": "number",
+          "nullable": false,
+          "sample_value": 0
+        },
+        "color": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "#3b82f6"
+        }
+      },
+      "column_count": 8
+    },
+    "users": {
+      "row_count": 2,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "b194c90c-e158-4c88-bdf0-5cbd6e35fba9"
+        },
+        "tenant_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "31701213-794d-43c3-a74a-50d57fcd9d2b"
+        },
+        "full_name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Sergio"
+        },
+        "email": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "admin@signumcursos.com"
+        },
+        "whatsapp_number": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "5511945248552"
+        },
+        "role": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "super_admin"
+        },
+        "avatar_url": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "is_active": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "last_sign_in_at": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "modules": {
+          "type": "object",
+          "nullable": false,
+          "sample_value": []
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T14:47:12.874434+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-24T14:48:40.043454+00:00"
+        },
+        "ai_paused": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": false
+        }
+      },
+      "column_count": 13
+    },
+    "channels": {
+      "row_count": 2,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "b372d7ea-64ed-49e0-b1b6-a5176490f999"
+        },
+        "tenant_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d23e15bb-5294-4f33-905e-f1565ba6022d"
+        },
+        "channel_provider_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "076b2291-d532-41b0-8b41-a2f721e22ea5"
+        },
+        "name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "WhatsApp Principal"
+        },
+        "identification_number": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "+5511999999999"
+        },
+        "instance_company_name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "Lab Rodinele - DEV"
+        },
+        "is_active": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "is_receiving_messages": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "is_sending_messages": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "observations": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "external_api_url": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "https://wsapilocal2.ligeira.net"
+        },
+        "provider_external_channel_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "62A0BF13D900-4256-B27A-52C3FBD192D5"
+        },
+        "config_json": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T14:48:23.403184+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-21T21:06:28.106411+00:00"
+        },
+        "identification_channel_client_descriptions": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "message_wait_time_fragments": {
+          "type": "number",
+          "nullable": false,
+          "sample_value": 8
+        }
+      },
+      "column_count": 17
+    },
+    "contact_data_changes": {
+      "row_count": 36,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "5f197879-93ec-4053-bacd-3c687a80e454"
+        },
+        "tenant_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d23e15bb-5294-4f33-905e-f1565ba6022d"
+        },
+        "contact_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "f3ecfd4a-c697-460d-8ff6-e4424b62d481"
+        },
+        "field_name": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "email"
+        },
+        "old_value": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "new_value": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "frank.silva.ti@gmail.com"
+        },
+        "changed_by": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "618ea8de-2231-4300-939e-8bf53301c2a0"
+        },
+        "changed_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-18T23:50:46.93332+00:00"
+        }
+      },
+      "column_count": 8
+    },
+    "conversations": {
+      "row_count": 74,
+      "columns": {
+        "id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "088cc19e-383e-4bed-b9a9-0991516b5e97"
+        },
+        "contact_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "f3ecfd4a-c697-460d-8ff6-e4424b62d481"
+        },
+        "tenant_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "d23e15bb-5294-4f33-905e-f1565ba6022d"
+        },
+        "channel_id": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "b372d7ea-64ed-49e0-b1b6-a5176490f999"
+        },
+        "external_id": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "status": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "paused"
+        },
+        "ia_active": {
+          "type": "boolean",
+          "nullable": false,
+          "sample_value": true
+        },
+        "last_message_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T12:48:23.928+00:00"
+        },
+        "overall_feedback_type": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "overall_feedback_text": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "created_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T14:48:24.208857+00:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "nullable": false,
+          "sample_value": "2025-11-17T14:48:24.208857+00:00"
+        },
+        "conversation_pause_reason_id": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "pause_notes": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "conversation_closure_reason_id": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        },
+        "closure_notes": {
+          "type": "object",
+          "nullable": true,
+          "sample_value": null
+        }
+      },
+      "column_count": 16
+    }
+  }
+}

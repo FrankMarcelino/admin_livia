@@ -66,7 +66,7 @@ interface Example {
 | Dashboard | 🟡 Planejado | `dashboard.md` |
 | Gerenciar Empresas | ⬜ Não Iniciado | `gerenciar-empresas.md` |
 | Gerenciar Feedbacks | ⬜ Não Iniciado | `gerenciar-feedbacks.md` |
-| Gerenciar NeuroCores | ⬜ Não Iniciado | `gerenciar-neurocores.md` |
+| Gerenciar NeuroCores | 🟡 Planejado | `gerenciar-neurocores.md` |
 | Gerenciar Agentes | ⬜ Não Iniciado | `gerenciar-agentes.md` |
 | Meu Perfil | ⬜ Não Iniciado | `meu-perfil.md` |
 

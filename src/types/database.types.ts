@@ -1,9 +1,9 @@
 /**
  * Database Types - Auto-generated from Supabase Schema
- * Generated at: 2025-11-28T13:26:00
- * 
+ * Generated at: 2025-11-30
+ *
  * This file contains TypeScript types for all database tables.
- * DO NOT EDIT MANUALLY - Regenerate when schema changes.
+ * Updated to reflect new schema changes (agents, neurocores, agent_prompts)
  */
 
 // ============================================================================
@@ -211,23 +211,14 @@ export interface MessageUpdate extends Partial<MessageInsert> {}
 
 /**
  * AGENTS - AI agents
+ * Updated: 2025-11-30 - New schema with id_neurocore FK
  */
 export interface Agent {
   id: UUID;
   name: string;
-  type: AgentType;
-  function: AgentFunction;
-  gender: string | null;
-  persona: string | null;
-  personality_tone: string | null;
-  communication_medium: string | null;
-  objective: string | null;
-  is_intent_agent: boolean;
-  associated_neurocores: UUID[];
-  instructions: string;
-  limitations: string;
-  conversation_roteiro: string;
-  other_instructions: string;
+  type: string;  // Generic type (e.g., "receptionist", "sales_rep", "tech_support")
+  id_neurocore: UUID;  // FK to neurocores table (1:N relationship)
+  reactive: boolean;  // If agent is reactive (responds when triggered) vs proactive
   created_at: Timestamp;
   updated_at: Timestamp;
 }
@@ -242,6 +233,7 @@ export interface AgentUpdate extends Partial<AgentInsert> {}
 
 /**
  * NEUROCORES - AI processing cores
+ * Updated: 2025-11-30 - Removed associated_agents (now via agents.id_neurocore)
  */
 export interface Neurocore {
   id: UUID;
@@ -249,7 +241,6 @@ export interface Neurocore {
   description: string;
   id_subwork_n8n_neurocore: string;
   is_active: boolean;
-  associated_agents: UUID[];
   created_at: Timestamp;
   updated_at: Timestamp;
 }
@@ -484,6 +475,35 @@ export interface NicheInsert extends Omit<Niche, 'id' | 'created_at' | 'updated_
 
 export interface NicheUpdate extends Partial<NicheInsert> {}
 
+/**
+ * AGENT_PROMPTS - Agent personality and instructions per tenant
+ * New table: 2025-11-30
+ * This table stores the personalization layer for agents per tenant
+ */
+export interface AgentPrompt {
+  id: number;  // BIGINT GENERATED ALWAYS AS IDENTITY
+  created_at: Timestamp;
+  name: string | null;
+  age: string | null;
+  gender: string | null;  // USER-DEFINED enum
+  objective: string | null;
+  comunication: string | null;  // Note: typo in database (not "communication")
+  personality: string | null;
+  limitations: Json | null;  // JSONB
+  rules: Json | null;  // JSONB
+  instructions: Json | null;  // JSONB
+  guide_line: Json | null;  // JSONB
+  others_instructions: Json | null;  // JSONB
+  id_agent: UUID | null;  // FK to agents
+  id_tenant: UUID | null;  // FK to tenants
+}
+
+export interface AgentPromptInsert extends Omit<AgentPrompt, 'id' | 'created_at'> {
+  created_at?: Timestamp;
+}
+
+export interface AgentPromptUpdate extends Partial<AgentPromptInsert> {}
+
 // ============================================================================
 // DATABASE TYPE
 // ============================================================================
@@ -579,6 +599,11 @@ export interface Database {
         Insert: NicheInsert;
         Update: NicheUpdate;
       };
+      agent_prompts: {
+        Row: AgentPrompt;
+        Insert: AgentPromptInsert;
+        Update: AgentPromptUpdate;
+      };
     };
   };
 }
@@ -647,9 +672,10 @@ export interface UserWithRelations extends User {
 
 /**
  * Agent with populated relationships
+ * Updated: 2025-11-30 - neurocore is now singular (1:N relationship)
  */
 export interface AgentWithRelations extends Agent {
-  neurocores?: Neurocore[];
+  neurocore?: Neurocore;  // Single neurocore (via id_neurocore FK)
 }
 
 /**

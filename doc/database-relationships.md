@@ -169,38 +169,44 @@ Mensagens trocadas nas conversas.
 
 ---
 
-### 6. **AGENTS** (Agentes de IA)
+### 6. **AGENTS** (Agentes de IA) ⚠️ ATUALIZADO
 Agentes virtuais que conversam com contatos.
 
 **Relacionamentos:**
-- `agents.associated_neurocores` → `neurocores.id[]` (N:N via JSON array)
+- `agents.id_neurocore` → `neurocores.id` (N:1) ⚠️ **MUDOU**
 
 **Referenciado por:**
 - `messages.sender_agent_id` → `agents.id`
 
 **Campos Importantes:**
-- `type` - Tipo do agente (reactive, proactive)
-- `function` - Função (support, sales, etc.)
-- `is_intent_agent` - Se é agente de intenção
-- `instructions` - Instruções para o agente
-- `conversation_roteiro` - Roteiro de conversa
+- `type` - Tipo do agente (ex: "intention")
+- `reactive` - Se é agente reativo (boolean)
+
+**⚠️ MUDANÇAS (30/11/2025):**
+- **Removidos:** function, gender, persona, personality_tone, communication_medium, objective, is_intent_agent, associated_neurocores, instructions, limitations, conversation_roteiro, other_instructions
+- **Novos:** id_neurocore (FK), reactive (boolean)
+- **Relacionamento mudou:** De N:N para 1:N com neurocores
 
 ---
 
-### 7. **NEUROCORES** (Núcleos de IA)
+### 7. **NEUROCORES** (Núcleos de IA) ⚠️ ATUALIZADO
 Núcleos de processamento de IA.
 
 **Relacionamentos:**
-- `neurocores.associated_agents` → `agents.id[]` (N:N via JSON array)
+- Nenhum (apenas é referenciado)
 
 **Referenciado por:**
 - `tenants.neurocore_id` → `neurocores.id`
 - `base_conhecimentos.neurocore_id` → `neurocores.id`
-- `agents.associated_neurocores` → `neurocores.id[]`
+- `agents.id_neurocore` → `neurocores.id` (1:N) ⚠️ **MUDOU**
 
 **Campos Importantes:**
 - `id_subwork_n8n_neurocore` - ID do subworkflow N8N
 - `is_active` - Se está ativo
+
+**⚠️ MUDANÇAS (30/11/2025):**
+- **Removido:** associated_agents (array)
+- **Relacionamento mudou:** Agora agents tem FK id_neurocore apontando para neurocores (1:N)
 
 ---
 
@@ -402,7 +408,7 @@ Feedbacks gerais (não implementado ainda).
 | Conversation → Messages | 1:N | Uma conversa tem várias mensagens |
 | User → Messages | 1:N | Um usuário pode enviar várias mensagens |
 | Agent → Messages | 1:N | Um agente pode enviar várias mensagens |
-| Neurocore → Agents | N:N | Neurocores e Agents têm relação N:N |
+| Neurocore → Agents | 1:N ⚠️ | **MUDOU:** Era N:N, agora 1:N (agents.id_neurocore) |
 | Neurocore → Base_Conhecimentos | 1:N | Um neurocore tem várias bases |
 | Base_Conhecimentos → Synapses | 1:N | Uma base tem várias sinapses |
 | Conversation → Tags | N:N | Via conversation_tags |

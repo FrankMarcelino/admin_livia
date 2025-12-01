@@ -5,7 +5,8 @@
       "Bash(do wc -l \"$file\")",
       "Bash(npx shadcn@latest add:*)",
       "Bash(npm run build:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(node extract-schema.js:*)"
     ],
     "deny": [],
     "ask": []
