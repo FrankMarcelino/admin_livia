@@ -21,11 +21,19 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
-import { agentCreateSchema, AgentCreateInput } from '@/lib/validations/neurocoreValidation'
+import { agentFormSchema, AgentFormInput } from '@/lib/validations/neurocoreValidation'
 import { AgentFormData } from './NeurocoreForm'
+import { AgentFunction } from '@/types/database.types'
 
 interface AgentFormDialogProps {
   open: boolean
@@ -43,20 +51,18 @@ export function AgentFormDialog({
   const isEditing = !!agent
 
   // Form setup
-  const form = useForm<AgentCreateInput>({
-    resolver: zodResolver(agentCreateSchema),
+  const form = useForm<AgentFormInput>({
+    resolver: zodResolver(agentFormSchema),
     defaultValues: agent
       ? {
           name: agent.name,
-          type: agent.type,
-          reactive: agent.reactive,
-          id_neurocore: agent.id_neurocore || '' // Will be set by parent
+          type: agent.type as AgentFunction,
+          reactive: agent.reactive
         }
       : {
           name: '',
-          type: '',
-          reactive: true,
-          id_neurocore: '' // Will be set by parent
+          type: 'attendant' as AgentFunction,
+          reactive: true
         }
   })
 
@@ -69,7 +75,11 @@ export function AgentFormDialog({
   }
 
   // Submit handler
-  function onSubmit(data: AgentCreateInput) {
+  function onSubmit(data: AgentFormInput, e?: React.BaseSyntheticEvent) {
+    // Prevent event propagation to parent forms
+    e?.preventDefault()
+    e?.stopPropagation()
+
     // Pass data back to parent (preserving id if editing)
     onSuccess({
       ...agent, // Preserve existing fields like id
@@ -79,6 +89,7 @@ export function AgentFormDialog({
     } as AgentFormData)
 
     form.reset()
+    handleOpenChange(false)
   }
 
   return (
@@ -96,7 +107,14 @@ export function AgentFormDialog({
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              form.handleSubmit(onSubmit)(e)
+            }}
+            className="space-y-4"
+          >
             {/* Nome */}
             <FormField
               control={form.control}
@@ -122,11 +140,21 @@ export function AgentFormDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Tipo do Agent *</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Ex: receptionist, sales_rep, support" {...field} />
-                  </FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o tipo" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="attendant">Atendente</SelectItem>
+                      <SelectItem value="intention">Intenções</SelectItem>
+                      <SelectItem value="in_guard_rails">In Guard Rails</SelectItem>
+                      <SelectItem value="observer">Observador</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormDescription>
-                    Tipo genérico que define a função do agent
+                    Função principal que o agent desempenhará
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

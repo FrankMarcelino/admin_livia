@@ -55,8 +55,33 @@ export async function fetchNeurocoresWithRelations(
     throw error
   }
 
+  // Enriquecer neurocores com estatísticas de tenants
+  const neurocoresWithStats = await Promise.all(
+    (data || []).map(async (neurocore: any) => {
+      // Contar tenants que usam este neurocore
+      const { count: tenantCount } = await supabase
+        .from('tenants')
+        .select('*', { count: 'exact', head: true })
+        .eq('neurocore_id', neurocore.id)
+
+      return {
+        ...neurocore,
+        stats: {
+          total_agents: neurocore.agents?.length || 0,
+          total_tenants: tenantCount || 0
+        }
+      }
+    })
+  )
+
+  // Debug: Log dos neurocores e agents carregados
+  console.log('📊 Neurocores carregados:', neurocoresWithStats.length)
+  neurocoresWithStats.forEach((nc: any) => {
+    console.log(`  - ${nc.name}: ${nc.agents?.length || 0} agents, ${nc.stats?.total_tenants || 0} tenants`)
+  })
+
   return {
-    data: (data || []) as NeurocoreWithRelations[],
+    data: neurocoresWithStats as NeurocoreWithRelations[],
     total: count || 0
   }
 }

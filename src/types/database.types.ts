@@ -42,7 +42,7 @@ export type SynapseStatus = 'draft' | 'published';
 export type AgentType = 'reactive' | 'proactive';
 
 /** Agent function */
-export type AgentFunction = 'support' | 'sales' | 'general';
+export type AgentFunction = 'attendant' | 'intention' | 'in_guard_rails' | 'observer';
 
 /** User role */
 export type UserRole = 'super_admin' | 'admin' | 'attendant' | 'viewer';
@@ -216,7 +216,7 @@ export interface MessageUpdate extends Partial<MessageInsert> {}
 export interface Agent {
   id: UUID;
   name: string;
-  type: string;  // Generic type (e.g., "receptionist", "sales_rep", "tech_support")
+  type: AgentFunction;  // Function type: support, sales, or general
   id_neurocore: UUID;  // FK to neurocores table (1:N relationship)
   reactive: boolean;  // If agent is reactive (responds when triggered) vs proactive
   created_at: Timestamp;

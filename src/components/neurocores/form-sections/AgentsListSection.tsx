@@ -17,12 +17,23 @@ import { Badge } from '@/components/ui/badge'
 import { Plus, Edit, Trash2 } from 'lucide-react'
 import { AgentFormData } from '../NeurocoreForm'
 import { AgentFormDialog } from '../AgentFormDialog'
+import { AgentFunction } from '@/types/database.types'
 
 interface AgentsListSectionProps {
   agents: AgentFormData[]
   onAddAgent: (agent: AgentFormData) => void
   onEditAgent: (index: number, agent: AgentFormData) => void
   onDeleteAgent: (index: number) => void
+}
+
+const getAgentTypeLabel = (type: AgentFunction): string => {
+  const labels: Record<AgentFunction, string> = {
+    attendant: 'Atendente',
+    intention: 'Intenções',
+    in_guard_rails: 'In Guard Rails',
+    observer: 'Observador'
+  }
+  return labels[type] || type
 }
 
 export function AgentsListSection({
@@ -147,7 +158,7 @@ export function AgentsListSection({
 
                     {/* Tipo */}
                     <TableCell className="text-sm">
-                      {agent.type}
+                      {getAgentTypeLabel(agent.type)}
                     </TableCell>
 
                     {/* Modo (Reactive/Proactive) */}

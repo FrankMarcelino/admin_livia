@@ -61,17 +61,20 @@ interface Example {
 
 ## Status das Features
 
-| Feature | Status | Arquivo |
-|---------|--------|---------|
-| Dashboard | 🟡 Planejado | `dashboard.md` |
-| Gerenciar Empresas | ⬜ Não Iniciado | `gerenciar-empresas.md` |
-| Gerenciar Feedbacks | ⬜ Não Iniciado | `gerenciar-feedbacks.md` |
-| Gerenciar NeuroCores | 🟡 Planejado | `gerenciar-neurocores.md` |
-| Gerenciar Agentes | ⬜ Não Iniciado | `gerenciar-agentes.md` |
-| Meu Perfil | ⬜ Não Iniciado | `meu-perfil.md` |
+| Feature | Status | Progresso | Arquivo |
+|---------|--------|-----------|---------|
+| Dashboard | 🟡 Planejado | 0% | `dashboard.md` |
+| Gerenciar Empresas | 🔵 Em Desenvolvimento | 85% | `gerenciar-empresas.md` |
+| Gerenciar Feedbacks | ⬜ Não Iniciado | 0% | `gerenciar-feedbacks.md` |
+| Gerenciar NeuroCores | ✅ Completo | 100% | `gerenciar-neurocores.md` |
+| Gerenciar Agentes (Templates) | 🟡 Planejado | 0% | `gerenciar-agentes.md` |
+| Meu Perfil | ⬜ Não Iniciado | 0% | `meu-perfil.md` |
 
 **Legenda:**
 - ⬜ Não Iniciado
 - 🟡 Planejado
 - 🔵 Em Desenvolvimento
 - ✅ Completo
+- ℹ️ Nota informativa
+
+**Última Atualização:** 2025-12-02

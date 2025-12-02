@@ -31,12 +31,25 @@ export const agentCreateSchema = z.object({
     .min(3, 'Nome deve ter no mínimo 3 caracteres')
     .max(100, 'Nome deve ter no máximo 100 caracteres'),
 
-  type: z.string()
-    .min(1, 'Tipo do agente é obrigatório')
-    .max(50, 'Tipo deve ter no máximo 50 caracteres'),
+  type: z.enum(['attendant', 'intention', 'in_guard_rails', 'observer']),
 
   id_neurocore: z.string()
-    .uuid('ID do Neurocore inválido'),
+    .uuid('ID do Neurocore inválido')
+    .optional(), // Optional durante criação no modal (será preenchido pelo formulário pai)
+
+  reactive: z.boolean()
+})
+
+/**
+ * Schema Zod para formulário de agent no modal (sem id_neurocore)
+ * Usado no AgentFormDialog onde o id_neurocore será atribuído posteriormente
+ */
+export const agentFormSchema = z.object({
+  name: z.string()
+    .min(3, 'Nome deve ter no mínimo 3 caracteres')
+    .max(100, 'Nome deve ter no máximo 100 caracteres'),
+
+  type: z.enum(['attendant', 'intention', 'in_guard_rails', 'observer']),
 
   reactive: z.boolean()
 })
@@ -60,6 +73,11 @@ export type NeurocoreUpdateInput = z.infer<typeof neurocoreUpdateSchema>
  * Tipo inferido do schema de criação de agent
  */
 export type AgentCreateInput = z.infer<typeof agentCreateSchema>
+
+/**
+ * Tipo inferido do schema de formulário de agent (modal)
+ */
+export type AgentFormInput = z.infer<typeof agentFormSchema>
 
 /**
  * Tipo inferido do schema de atualização de agent

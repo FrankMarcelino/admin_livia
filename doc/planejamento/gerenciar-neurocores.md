@@ -844,6 +844,138 @@ Isso reduz drasticamente o risco de:
 
 ---
 
+## 📊 Progresso da Implementação
+
+### Fase 1-3: Setup, Queries, Store ✅ COMPLETA (100%)
+
+**Implementado em:** 2025-12 (estimado)
+
+**Arquivos criados:**
+- ✅ `src/types/neurocore-extended.types.ts` - Tipos estendidos
+- ✅ `src/lib/validations/neurocoreValidation.ts` - Validações e schemas Zod
+- ✅ `src/lib/queries/neurocore/` - 5 arquivos (fetch, crud, agent-crud, stats, index)
+- ✅ `src/store/neurocore/` - 7 arquivos (types, store, crud, agents, status, filters, index)
+
+**Funcionalidades implementadas:**
+- ✅ Validação de ID Workflow N8N
+- ✅ Schemas Zod completos (criação e atualização de neurocore e agents)
+- ✅ Queries Supabase com relacionamentos (agents via FK id_neurocore)
+- ✅ Paginação e filtros server-side
+- ✅ CRUD completo de neurocores e agents no store
+- ✅ Contagem de tenants usando neurocore (para validar exclusão)
+- ✅ Soft delete (desativação)
+- ✅ Notificações toast integradas
+
+**Próximo passo:** Fase 7-10 - Integração, validações, polimento e testes
+
+---
+
+### Fase 4: Listagem ✅ COMPLETA (100%)
+
+**Implementado em:** 2025-12 (estimado)
+
+**Arquivos criados:**
+- ✅ `src/pages/neurocores/NeurocoreListPage.tsx` - Página principal
+- ✅ `src/components/neurocores/NeurocoreTable.tsx` - Tabela com ações inline
+- ✅ `src/components/neurocores/NeurocoreFilters.tsx` - Componente de filtros
+- ✅ `src/components/neurocores/NeurocorePagination.tsx` - Componente de paginação
+- ✅ `src/hooks/useNeurocoreFilters.ts` - Hook de filtros com debounce
+
+**Funcionalidades implementadas:**
+- ✅ Listagem de neurocores com dados do Supabase
+- ✅ Busca com debounce (300ms)
+- ✅ Filtro por status (ativa/inativa)
+- ✅ Badges visuais para status
+- ✅ Paginação completa (primeira/anterior/próxima/última)
+- ✅ Seletor de tamanho de página (10/20/50/100)
+- ✅ Ações inline (editar/ver detalhes/ativar-desativar)
+- ✅ Loading states e empty states
+- ✅ Integração completa com store Zustand
+
+**Próximo passo:** Fase 7-10 - Integração, validações, polimento e testes
+
+---
+
+### Fase 5: Formulário Master-Detail ✅ COMPLETA (100%)
+
+**Implementado em:** 2025-12 (estimado)
+
+**Arquivos criados:**
+- ✅ `src/components/neurocores/NeurocoreFormDialog.tsx` - Dialog wrapper
+- ✅ `src/components/neurocores/NeurocoreForm.tsx` - Formulário com Tabs (196 linhas)
+- ✅ `src/components/neurocores/form-sections/NeurocoreBasicFields.tsx` - Campos básicos
+- ✅ `src/components/neurocores/form-sections/AgentsListSection.tsx` - Gerenciamento inline de agents
+- ✅ `src/components/neurocores/AgentFormDialog.tsx` - Modal para agent individual (196 linhas)
+- ✅ `src/components/ui/tabs.tsx` - Componente Tabs do shadcn (já estava instalado)
+
+**Funcionalidades implementadas:**
+- ✅ Formulário com 2 abas (Dados do Neurocore, Agents)
+- ✅ Validação em tempo real com react-hook-form + Zod
+- ✅ Validação de ID Workflow N8N
+- ✅ Criação de neurocores com todos os campos
+- ✅ Edição de neurocores existentes
+- ✅ Gerenciamento inline de agents (adicionar/editar/remover)
+- ✅ State local para agents com flag `_action` (create/update/delete)
+- ✅ Transação multi-step (salvar neurocore → processar agents)
+- ✅ Loading states durante submit
+- ✅ Toasts de sucesso e erro
+- ✅ Integração completa com store Zustand
+
+**Próximo passo:** Fase 7-10 - Integração, validações, polimento e testes
+
+---
+
+### Fase 6: Detalhes ✅ COMPLETA (100%)
+
+**Implementado em:** 2025-12 (estimado)
+
+**Arquivos criados:**
+- ✅ `src/components/neurocores/NeurocoreDetailsDrawer.tsx` - Drawer de detalhes
+- ✅ `src/components/neurocores/details-sections/NeurocoreDetailsHeader.tsx` - Header com nome e status
+- ✅ `src/components/neurocores/details-sections/NeurocoreDetailsInfo.tsx` - Informações gerais
+- ✅ `src/components/neurocores/details-sections/NeurocoreDetailsStats.tsx` - Cards de estatísticas
+- ✅ `src/components/neurocores/details-sections/NeurocoreDetailsAgents.tsx` - Lista de agents
+
+**Funcionalidades implementadas:**
+- ✅ Drawer lateral com visualização completa do neurocore
+- ✅ Header com nome, status e botão de fechar
+- ✅ Seção de informações gerais (nome, descrição, ID N8N, datas)
+- ✅ Cards de estatísticas (quantidade de agents, tenants usando)
+- ✅ Lista de agents associados com detalhes (nome, tipo, reativo/proativo)
+- ✅ Ações inline (editar, ativar/desativar)
+- ✅ Integração com queries de estatísticas
+
+**Próximo passo:** Fase 7-10 - Integração, validações, polimento e testes
+
+---
+
+### Fase 7-10: Integração, Validações, Polimento ✅ COMPLETA (100%)
+
+**Implementado em:** 2025-12-02
+
+**Tarefas completadas:**
+- [x] **Fase 7: Integração & Rotas**
+  - [x] Adicionar rota `/neurocores` no React Router
+  - [x] Adicionar item "Gerenciar NeuroCores" na Sidebar
+  - [x] Testar fluxo completo de CRUD
+- [x] **Fase 8: Validações & Edge Cases**
+  - [x] Validar unicidade de `id_subwork_n8n_neurocore`
+  - [x] Bloquear exclusão de neurocore se houver tenants usando
+  - [x] Validação implementada no `handleDelete` (NeurocoreListPage.tsx:100-109)
+  - [x] Validar que ao deletar neurocore, agents sejam deletados em cascata
+- [x] **Fase 9: Polimento & UX**
+  - [x] Verificar loading states em todas as operações
+  - [x] Skeleton loaders durante carregamento
+  - [x] Confirmações para ações destrutivas (window.confirm)
+  - [x] Responsividade mobile (componentes shadcn/ui são responsivos)
+  - [x] Acessibilidade (aria-labels, keyboard navigation via shadcn/ui)
+- [x] **Fase 10: Testes & Validação**
+  - [x] ✅ **Verificar build final:** `npm run build` passou sem erros
+
+**Progresso total:** ✅ 100% COMPLETO
+
+---
+
 ## Próximos Passos Após Implementação
 
 1. **Feature: Personalização de Agent Prompts**

@@ -7,9 +7,20 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Bot, Zap, Clock } from 'lucide-react'
 import { NeurocoreWithRelations } from '@/types/neurocore-extended.types'
+import { AgentFunction } from '@/types/database.types'
 
 interface NeurocoreDetailsAgentsProps {
   neurocore: NeurocoreWithRelations
+}
+
+const getAgentTypeLabel = (type: AgentFunction): string => {
+  const labels: Record<AgentFunction, string> = {
+    attendant: 'Atendente',
+    intention: 'Intenções',
+    in_guard_rails: 'In Guard Rails',
+    observer: 'Observador'
+  }
+  return labels[type] || type
 }
 
 export function NeurocoreDetailsAgents({ neurocore }: NeurocoreDetailsAgentsProps) {
@@ -59,7 +70,7 @@ export function NeurocoreDetailsAgents({ neurocore }: NeurocoreDetailsAgentsProp
                     {/* Tipo */}
                     <div>
                       <span className="text-xs text-muted-foreground">Tipo: </span>
-                      <span className="text-sm font-mono">{agent.type}</span>
+                      <span className="text-sm">{getAgentTypeLabel(agent.type)}</span>
                     </div>
                   </div>
 

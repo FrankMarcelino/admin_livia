@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useNeurocoreStore } from '@/store/neurocore'
 import { NeurocoreWithRelations } from '@/types/neurocore-extended.types'
-import { Agent } from '@/types/database.types'
+import { Agent, AgentFunction } from '@/types/database.types'
 import { neurocoreCreateSchema, NeurocoreCreateInput } from '@/lib/validations/neurocoreValidation'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
@@ -25,7 +25,7 @@ export interface AgentFormData extends Partial<Agent> {
   _action?: 'create' | 'update' | 'delete'
   // Required fields for new agents
   name: string
-  type: string
+  type: AgentFunction
   reactive: boolean
 }
 
@@ -96,33 +96,58 @@ export function NeurocoreForm({ neurocore, onSuccess, onCancel }: NeurocoreFormP
 
   // Submit handler with transaction logic
   async function onSubmit(data: NeurocoreCreateInput) {
+    console.log('🚀 Submit iniciado')
+    console.log('📋 Agents a processar:', agents)
     let neurocoreId: string
 
     // Step 1: Create or update neurocore
     if (isEditing && neurocore) {
+      console.log('✏️ Atualizando neurocore:', neurocore.id)
       const result = await updateNeurocore(neurocore.id, data)
-      if (!result) return // Error already handled by store
+      if (!result) {
+        console.error('❌ Falha ao atualizar neurocore')
+        return // Error already handled by store
+      }
       neurocoreId = neurocore.id
+      console.log('✅ Neurocore atualizado')
     } else {
+      console.log('➕ Criando novo neurocore')
       const result = await createNeurocore(data)
-      if (!result) return // Error already handled by store
+      if (!result) {
+        console.error('❌ Falha ao criar neurocore')
+        return // Error already handled by store
+      }
       neurocoreId = result.id
+      console.log('✅ Neurocore criado:', neurocoreId)
     }
 
     // Step 2: Process agents (only if editing or if new agents were added)
     const { createAgent, updateAgent, deleteAgent } = useNeurocoreStore.getState()
 
+    console.log('🔄 Processando agents...')
     for (const agent of agents) {
+      console.log('  Agent:', agent.name, '| Ação:', agent._action)
+
       if (agent._action === 'create') {
         // Create new agent
-        await createAgent({
+        console.log('  ➕ Criando agent:', agent.name)
+        const agentData = {
           name: agent.name,
           type: agent.type,
           reactive: agent.reactive,
           id_neurocore: neurocoreId
-        })
+        }
+        console.log('  📦 Dados do agent:', agentData)
+
+        const result = await createAgent(agentData)
+        if (result) {
+          console.log('  ✅ Agent criado com sucesso:', result.id)
+        } else {
+          console.error('  ❌ Falha ao criar agent')
+        }
       } else if (agent._action === 'update' && agent.id) {
         // Update existing agent
+        console.log('  ✏️ Atualizando agent:', agent.name)
         await updateAgent(agent.id, {
           name: agent.name,
           type: agent.type,
@@ -130,10 +155,12 @@ export function NeurocoreForm({ neurocore, onSuccess, onCancel }: NeurocoreFormP
         })
       } else if (agent._action === 'delete' && agent.id) {
         // Delete agent
+        console.log('  🗑️ Deletando agent:', agent.name)
         await deleteAgent(agent.id)
       }
     }
 
+    console.log('✅ Processamento concluído')
     onSuccess()
   }
 

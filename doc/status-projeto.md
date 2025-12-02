@@ -1,9 +1,11 @@
 # Status do Projeto - Plataforma Super Admin
 
-**Última Atualização:** 2025-11-30
+**Última Atualização:** 2025-12-02
 
 ## Status Geral
-🟢 **Em Desenvolvimento** - Gerenciar Empresas 85% Completo
+🟢 **Em Desenvolvimento Ativo**
+- Gerenciar Empresas: 85% Completo
+- Gerenciar NeuroCores: ✅ 100% Completo
 
 ## Progresso por Fase
 
@@ -72,10 +74,51 @@
   - [ ] Otimização de performance
   - [ ] Tratamento de erros aprimorado
 
-### ⬜ Fase 5-7: Outras Páginas (0%)
+### ✅ Fase 5: Gerenciar NeuroCores (100%)
+- [x] **Setup e Configuração** (100%)
+  - [x] Tipos TypeScript (neurocore-extended.types.ts)
+  - [x] Validações (neurocoreValidation.ts)
+  - [x] Schemas Zod completos
+  - [x] Queries Supabase modulares (5 arquivos)
+  - [x] Store Zustand modular (7 arquivos)
+- [x] **Listagem** (100%)
+  - [x] NeurocoreTable component
+  - [x] NeurocoreFilters component
+  - [x] NeurocorePagination component
+  - [x] NeurocoreListPage
+  - [x] Busca com debounce
+  - [x] Filtros por status
+  - [x] Paginação server-side
+  - [x] Loading/Empty states
+- [x] **Criação e Edição Master-Detail** (100%)
+  - [x] NeurocoreForm component (Tabs)
+  - [x] NeurocoreBasicFields (dados gerais)
+  - [x] AgentsListSection (gerenciamento inline de agents)
+  - [x] AgentFormDialog (modal para agent individual)
+  - [x] NeurocoreFormDialog wrapper
+  - [x] Validação em tempo real
+  - [x] CRUD integrado com Supabase
+  - [x] Transação multi-step (neurocore → agents)
+- [x] **Detalhes** (100%)
+  - [x] NeurocoreDetailsDrawer component
+  - [x] NeurocoreDetailsHeader (nome + status)
+  - [x] NeurocoreDetailsInfo (informações gerais)
+  - [x] NeurocoreDetailsStats (estatísticas)
+  - [x] NeurocoreDetailsAgents (lista de agents)
+  - [x] Ações inline (editar, ativar/desativar)
+- [x] **Integração & Validações** (100%)
+  - [x] Rota /neurocores configurada no React Router
+  - [x] Item "Gerenciar NeuroCores" na Sidebar
+  - [x] Validação de exclusão (bloquear se tenants usando)
+  - [x] Confirmações para ações destrutivas
+  - [x] Loading states em todas operações
+  - [x] Skeleton loaders durante carregamento
+  - [x] Build passando sem erros (2025-12-02)
+
+### ⬜ Fase 6-7: Outras Páginas (0%)
 - [ ] Gerenciar Feedbacks
-- [ ] Gerenciar NeuroCores
-- [ ] Gerenciar Agentes
+- [ ] Meu Perfil
+- [ ] Relatórios e Analytics
 
 ## Decisões Técnicas
 
@@ -159,28 +202,78 @@ src/
 ### Validações
 - ✅ `lib/validations/tenantValidation.ts` - Validações CNPJ, telefone, schemas Zod (161 linhas)
 
+## Arquivos Implementados (Gerenciar NeuroCores)
+
+### Store Modular (src/store/neurocore/)
+- ✅ `index.ts` - Export principal
+- ✅ `neurocoreStore.types.ts` - Tipos TypeScript
+- ✅ `neurocoreStore.ts` - Store principal
+- ✅ `neurocoreStore.crud.ts` - Operações CRUD neurocores
+- ✅ `neurocoreStore.agents.ts` - Operações CRUD agents
+- ✅ `neurocoreStore.status.ts` - Ações de status
+- ✅ `neurocoreStore.filters.ts` - Gerenciamento de filtros
+
+### Queries Modulares (src/lib/queries/neurocore/)
+- ✅ `index.ts` - Export principal
+- ✅ `neurocore-fetch.queries.ts` - Buscar neurocores
+- ✅ `neurocore-crud.queries.ts` - CRUD operations neurocores
+- ✅ `agent-crud.queries.ts` - CRUD operations agents
+- ✅ `neurocore-stats.queries.ts` - Estatísticas
+
+### Componentes (src/components/neurocores/)
+- ✅ `NeurocoreListPage.tsx` - Página principal
+- ✅ `NeurocoreTable.tsx` - Tabela
+- ✅ `NeurocoreFilters.tsx` - Filtros
+- ✅ `NeurocorePagination.tsx` - Paginação
+- ✅ `NeurocoreForm.tsx` - Formulário master-detail (196 linhas)
+- ✅ `NeurocoreFormDialog.tsx` - Dialog wrapper
+- ✅ `AgentFormDialog.tsx` - Modal para agent individual (196 linhas)
+- ✅ `NeurocoreDetailsDrawer.tsx` - Drawer de detalhes
+- ✅ `form-sections/NeurocoreBasicFields.tsx` - Campos básicos
+- ✅ `form-sections/AgentsListSection.tsx` - Gerenciamento de agents
+- ✅ `details-sections/NeurocoreDetailsHeader.tsx` - Header do drawer
+- ✅ `details-sections/NeurocoreDetailsInfo.tsx` - Informações gerais
+- ✅ `details-sections/NeurocoreDetailsStats.tsx` - Cards de estatísticas
+- ✅ `details-sections/NeurocoreDetailsAgents.tsx` - Lista de agents
+
+### Hooks
+- ✅ `useNeurocoreFilters.ts` - Lógica de filtros com debounce
+
+### Validações
+- ✅ `lib/validations/neurocoreValidation.ts` - Validações e schemas Zod
+
 ## Status do Build
-✅ **Build passando** - Testado em 2025-11-30
+✅ **Build passando** - Testado em 2025-12-02
 - Avisos: Node.js 20.16.0 (recomendado 20.19+) - não bloqueante
-- Bundle size: 758.92 kB (otimização pode ser feita futuramente)
+- Bundle size: 801.73 kB (otimização pode ser feita futuramente)
+- Build time: ~15 segundos
 
 ## Status do Dev Server
 ✅ **Rodando em** http://localhost:5173/
-- Rota principal: http://localhost:5173/empresas
+- Empresas: http://localhost:5173/empresas
+- NeuroCores: http://localhost:5173/neurocores
 
 ## Próximos Passos
 
-### Imediato (Para completar Gerenciar Empresas)
+### Imediato (Polimento de Features em Andamento)
+
+**Gerenciar Empresas (15% restante):**
 1. ⚠️ Implementar hook `useTenantStats`
 2. ⚠️ Adicionar cards de estatísticas no `TenantDetailsDrawer`
 3. ⚠️ Testar funcionalidade completa no browser
 4. ⚠️ Verificar integração real com Supabase
 
+**✅ Gerenciar NeuroCores - COMPLETO!**
+- Feature 100% implementada e testada
+- Build passando sem erros
+- Documentação atualizada
+
 ### Curto Prazo
-1. Implementar Dashboard (Fase 3)
-2. Criar outras páginas de gerenciamento
-3. Implementar autenticação
-4. Deploy em produção
+1. Finalizar Gerenciar Empresas (15% restante)
+2. Implementar Dashboard (Fase 3)
+3. Implementar Gerenciar Feedbacks
+4. Implementar autenticação de usuários
+5. Deploy em produção
 
 ## Notas
 - Projeto usa **shadcn/ui "new-york" style**
