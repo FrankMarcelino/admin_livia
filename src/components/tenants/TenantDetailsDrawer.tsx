@@ -14,6 +14,9 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { Card } from '@/components/ui/card'
+import { Switch } from '@/components/ui/switch'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Building2,
   FileText,
@@ -26,9 +29,18 @@ import {
   Edit,
   Power,
   PowerOff,
+  Users,
+  UserCircle,
+  MessageCircle,
+  Radio,
+  BarChart3,
+  Zap,
 } from 'lucide-react'
 import { formatCNPJ } from '@/lib/validations/tenantValidation'
 import { formatDate } from '@/lib/utils'
+import { useTenantStats } from '@/hooks/useTenantStats'
+import { useTenantChannels } from '@/hooks/useTenantChannels'
+import { useTenantStore } from '@/store/tenant'
 
 interface TenantDetailsDrawerProps {
   tenant: TenantWithRelations | null
@@ -45,6 +57,11 @@ export function TenantDetailsDrawer({
   onEdit,
   onToggleStatus,
 }: TenantDetailsDrawerProps) {
+  // Hooks
+  const { stats, isLoading: isLoadingStats } = useTenantStats(tenant?.id || null)
+  const { channels, isLoading: isLoadingChannels } = useTenantChannels(tenant?.id || null)
+  const { toggleMasterIntegration } = useTenantStore()
+
   if (!tenant) return null
 
   const getPlanLabel = (plan: string) => {
@@ -63,6 +80,10 @@ export function TenantDetailsDrawer({
       enterprise: 'destructive'
     }
     return variants[plan as keyof typeof variants] as 'secondary' | 'default' | 'destructive'
+  }
+
+  const handleToggleMasterIntegration = async (checked: boolean) => {
+    await toggleMasterIntegration(tenant.id, checked)
   }
 
   return (
@@ -236,7 +257,110 @@ export function TenantDetailsDrawer({
                 <label className="text-sm text-muted-foreground">Nicho</label>
                 <p className="text-sm font-medium">{tenant.niche?.name || 'Não informado'}</p>
               </div>
+              <div className="flex items-center justify-between pt-2">
+                <div className="space-y-0.5">
+                  <label className="text-sm font-medium flex items-center gap-2">
+                    <Zap className="h-4 w-4" />
+                    Integração Master
+                  </label>
+                  <p className="text-xs text-muted-foreground">
+                    Habilita recursos avançados de integração
+                  </p>
+                </div>
+                <Switch
+                  checked={tenant.master_integration_active}
+                  onCheckedChange={handleToggleMasterIntegration}
+                />
+              </div>
             </div>
+          </div>
+
+          <Separator />
+
+          {/* Estatísticas */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" />
+              Estatísticas
+            </h3>
+            {isLoadingStats ? (
+              <div className="grid grid-cols-2 gap-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <Card key={i} className="p-4">
+                    <Skeleton className="h-4 w-20 mb-2" />
+                    <Skeleton className="h-8 w-12" />
+                  </Card>
+                ))}
+              </div>
+            ) : stats ? (
+              <div className="grid grid-cols-2 gap-3">
+                <Card className="p-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Users className="h-4 w-4 text-blue-500" />
+                    <p className="text-xs text-muted-foreground">Usuários</p>
+                  </div>
+                  <p className="text-2xl font-bold">{stats.total_users}</p>
+                </Card>
+                <Card className="p-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <UserCircle className="h-4 w-4 text-green-500" />
+                    <p className="text-xs text-muted-foreground">Contatos</p>
+                  </div>
+                  <p className="text-2xl font-bold">{stats.total_contacts}</p>
+                </Card>
+                <Card className="p-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <MessageCircle className="h-4 w-4 text-purple-500" />
+                    <p className="text-xs text-muted-foreground">Conversas</p>
+                  </div>
+                  <p className="text-2xl font-bold">{stats.total_conversations}</p>
+                </Card>
+                <Card className="p-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Radio className="h-4 w-4 text-orange-500" />
+                    <p className="text-xs text-muted-foreground">Canais</p>
+                  </div>
+                  <p className="text-2xl font-bold">{stats.total_channels}</p>
+                </Card>
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">Nenhuma estatística disponível</p>
+            )}
+          </div>
+
+          <Separator />
+
+          {/* Canais Configurados */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <Radio className="h-4 w-4" />
+              Canais Configurados
+            </h3>
+            {isLoadingChannels ? (
+              <div className="space-y-2">
+                {[1, 2, 3].map((i) => (
+                  <Skeleton key={i} className="h-12 w-full" />
+                ))}
+              </div>
+            ) : channels.length > 0 ? (
+              <div className="space-y-2">
+                {channels.map((channel) => (
+                  <Card key={channel.id} className="p-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium">{channel.name}</p>
+                        <p className="text-xs text-muted-foreground capitalize">{channel.type}</p>
+                      </div>
+                      <Badge variant={channel.is_active ? 'default' : 'secondary'}>
+                        {channel.is_active ? 'Ativo' : 'Inativo'}
+                      </Badge>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">Nenhum canal configurado</p>
+            )}
           </div>
 
           <Separator />

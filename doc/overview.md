@@ -64,7 +64,7 @@ interface Example {
 | Feature | Status | Progresso | Arquivo |
 |---------|--------|-----------|---------|
 | Dashboard | 🟡 Planejado | 0% | `dashboard.md` |
-| Gerenciar Empresas | 🔵 Em Desenvolvimento | 85% | `gerenciar-empresas.md` |
+| Gerenciar Empresas | 🔵 Em Desenvolvimento | 56% | `gerenciar-empresas.md` |
 | Gerenciar Feedbacks | ⬜ Não Iniciado | 0% | `gerenciar-feedbacks.md` |
 | Gerenciar NeuroCores | ✅ Completo | 100% | `gerenciar-neurocores.md` |
 | Gerenciar Agentes (Templates) | 🟡 Planejado | 0% | `gerenciar-agentes.md` |
@@ -77,4 +77,4 @@ interface Example {
 - ✅ Completo
 - ℹ️ Nota informativa
 
-**Última Atualização:** 2025-12-02
+**Última Atualização:** 2025-12-03

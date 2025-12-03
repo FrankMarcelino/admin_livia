@@ -11,8 +11,15 @@ import { TenantFilters } from '@/components/tenants/TenantFilters'
 import { TenantPagination } from '@/components/tenants/TenantPagination'
 import { TenantFormDialog } from '@/components/tenants/TenantFormDialog'
 import { TenantDetailsDrawer } from '@/components/tenants/TenantDetailsDrawer'
+import { TenantDeleteDialog } from '@/components/tenants/TenantDeleteDialog'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { Plus, RefreshCw } from 'lucide-react'
 import { TenantWithRelations } from '@/types/tenant-extended.types'
 
@@ -46,6 +53,8 @@ export function TenantListPage() {
   const [selectedTenantForEdit, setSelectedTenantForEdit] = useState<TenantWithRelations | null>(null)
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const [selectedTenantForView, setSelectedTenantForView] = useState<TenantWithRelations | null>(null)
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+  const [selectedTenantForDelete, setSelectedTenantForDelete] = useState<TenantWithRelations | null>(null)
 
   // Fetch tenants on mount and when filters change
   useEffect(() => {
@@ -130,32 +139,62 @@ export function TenantListPage() {
     }
   }
 
+  const handleDelete = (tenant: TenantWithRelations) => {
+    setSelectedTenantForDelete(tenant)
+    setIsDeleteOpen(true)
+  }
+
+  const handleDeleteClose = () => {
+    setIsDeleteOpen(false)
+    setSelectedTenantForDelete(null)
+  }
+
+  const handleDeleteConfirm = async (tenant: TenantWithRelations) => {
+    await deactivateTenant(tenant.id)
+    await fetchTenants()
+  }
+
   return (
-    <div className="flex flex-col gap-6 p-6">
-      {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Gerenciar Empresas</h1>
-          <p className="text-muted-foreground mt-1">
-            Gerencie todas as empresas cadastradas na plataforma
-          </p>
+    <TooltipProvider>
+      <div className="flex flex-col gap-6 p-6">
+        {/* Header */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Gerenciar Empresas</h1>
+            <p className="text-muted-foreground mt-1">
+              Gerencie todas as empresas cadastradas na plataforma
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleRefresh}
+                  disabled={isRefreshing || isLoading}
+                >
+                  <RefreshCw className={`mr-2 h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+                  Atualizar
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Recarregar lista de empresas</p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="sm" onClick={handleCreateTenant}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Nova Empresa
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Cadastrar nova empresa</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefresh}
-            disabled={isRefreshing || isLoading}
-          >
-            <RefreshCw className={`mr-2 h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-            Atualizar
-          </Button>
-          <Button size="sm" onClick={handleCreateTenant}>
-            <Plus className="mr-2 h-4 w-4" />
-            Nova Empresa
-          </Button>
-        </div>
-      </div>
 
       {/* Filters */}
       <TenantFilters
@@ -177,6 +216,7 @@ export function TenantListPage() {
           onEdit={handleEdit}
           onView={handleView}
           onToggleStatus={handleToggleStatus}
+          onDelete={handleDelete}
         />
       </Card>
 
@@ -222,6 +262,15 @@ export function TenantListPage() {
         onEdit={handleEditFromDetails}
         onToggleStatus={handleToggleStatusFromDetails}
       />
-    </div>
+
+      {/* Delete Dialog */}
+      <TenantDeleteDialog
+        tenant={selectedTenantForDelete}
+        open={isDeleteOpen}
+        onOpenChange={handleDeleteClose}
+        onConfirm={handleDeleteConfirm}
+      />
+      </div>
+    </TooltipProvider>
   )
 }
