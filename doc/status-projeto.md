@@ -6,6 +6,7 @@
 🟢 **Em Desenvolvimento Ativo**
 - Gerenciar Empresas: 88% Completo (Fase 7 concluída, falta Fase 8)
 - Gerenciar NeuroCores: ✅ 100% Completo
+- Gerenciar Agentes (Templates): 🟡 50% Completo (Fases 1-5 completas, migration pendente)
 
 ## Progresso por Fase
 
@@ -96,6 +97,61 @@
   - [ ] Testes de validação
   - [ ] Testes de erros de rede
   - [ ] Checklist de testes criado
+
+### 🟡 Fase 5.5: Gerenciar Agentes (Templates) (50%)
+- [x] **Fase 1: Setup e Configuração** (100%)
+  - [x] Tipos TypeScript (agent-template-extended.types.ts) - 117 linhas
+  - [x] Validações Zod (agentTemplateValidation.ts) - 90 linhas
+  - [x] Migration SQL (20251203_create_agent_templates_table_fixed.sql) - 93 linhas
+  - ⚠️ **Pendente:** Executar migration no Supabase Studio
+  - [x] RLS Policies configuradas (no SQL)
+- [x] **Fase 2: Queries Supabase** (100%)
+  - [x] agent-template-fetch.queries.ts (fetch, fetchById, fetchActive) - 78 linhas
+  - [x] agent-template-crud.queries.ts (create, update, delete, toggle) - 121 linhas
+  - [x] agent-template-stats.queries.ts (counts, usage stats) - 44 linhas
+  - [x] index.ts (exports centralizados)
+- [x] **Fase 3: Store Zustand** (100%)
+  - [x] agentTemplateStore.types.ts - 50 linhas
+  - [x] agentTemplateStore.ts - 39 linhas
+  - [x] agentTemplateStore.crud.ts - 81 linhas (com toast notifications)
+  - [x] agentTemplateStore.filters.ts - 86 linhas
+  - [x] agentTemplateStore.status.ts - 33 linhas
+  - [x] index.ts
+  - ✅ **Build passando** (erros corrigidos)
+- [x] **Fase 4: Listagem** (100%)
+  - [x] AgentTemplateListPage - 118 linhas
+  - [x] AgentTemplateTable - 229 linhas
+  - [x] AgentTemplateFilters - 139 linhas
+  - [x] AgentTemplatePagination - 110 linhas
+  - [x] Hook useAgentTemplateFilters - 85 linhas
+  - [x] Rota `/agentes` configurada
+- [x] **Fase 5: Formulário** (100%)
+  - [x] AgentTemplateForm.tsx (Master com Tabs) - 145 linhas
+  - [x] AgentTemplateFormDialog.tsx (Dialog wrapper) - 60 linhas
+  - [x] form-sections/AgentTemplateBasicFields.tsx - 162 linhas
+  - [x] form-sections/AgentTemplatePersonaFields.tsx - 158 linhas
+  - [x] form-sections/AgentTemplateLimitationsSection.tsx - 109 linhas
+  - [x] form-sections/AgentTemplateInstructionsSection.tsx - 109 linhas
+  - [x] form-sections/AgentTemplateGuidelineSection.tsx - 200 linhas (com etapas e sub-instruções)
+  - ✅ **Build passando** (894.19 kB)
+- [ ] **Fase 6: Drawer de Detalhes** (0%)
+  - [ ] AgentTemplateDetailsDrawer
+  - [ ] details-sections/ (5 componentes)
+- [ ] **Fase 7: Integração com Neurocores** (0%)
+  - [ ] AgentTemplateSelector (modal)
+  - [ ] Modificar NeurocoreForm
+  - [ ] Copiar configuração do template para agent_prompts
+- [ ] **Fase 8: Integração com Tenants** (0%)
+  - [ ] Modificar tenantStore.crud
+  - [ ] Herança automática de agents ao criar tenant
+- [ ] **Fase 9: Testes e Validação** (0%)
+  - [ ] Testes manuais completos
+  - [ ] Edge cases
+  - [ ] Performance
+- [ ] **Fase 10: Polimento e Documentação** (0%)
+  - [ ] Responsividade
+  - [ ] Acessibilidade
+  - [ ] Build final
 
 ### ✅ Fase 5: Gerenciar NeuroCores (100%)
 - [x] **Setup e Configuração** (100%)

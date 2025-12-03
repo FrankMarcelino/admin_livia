@@ -504,6 +504,41 @@ export interface AgentPromptInsert extends Omit<AgentPrompt, 'id' | 'created_at'
 
 export interface AgentPromptUpdate extends Partial<AgentPromptInsert> {}
 
+/**
+ * AGENT_TEMPLATES - Agent templates for reuse across neurocores
+ * New table: 2025-12-03
+ * This table stores master agent configurations created by Super Admin
+ */
+export interface AgentTemplate {
+  id: UUID;
+  name: string;
+  type: AgentFunction;
+  reactive: boolean;
+  persona_name: string | null;
+  age: string | null;
+  gender: string | null;
+  objective: string | null;
+  communication: string | null;
+  personality: string | null;
+  limitations: Json | null;  // JSONB array of strings
+  rules: Json | null;  // JSONB
+  instructions: Json | null;  // JSONB array of strings
+  guide_line: Json | null;  // JSONB array of objects
+  others_instructions: Json | null;  // JSONB
+  is_active: boolean;
+  created_by: UUID | null;  // FK to auth.users
+  created_at: Timestamp;
+  updated_at: Timestamp;
+}
+
+export interface AgentTemplateInsert extends Omit<AgentTemplate, 'id' | 'created_at' | 'updated_at'> {
+  id?: UUID;
+  created_at?: Timestamp;
+  updated_at?: Timestamp;
+}
+
+export interface AgentTemplateUpdate extends Partial<AgentTemplateInsert> {}
+
 // ============================================================================
 // DATABASE TYPE
 // ============================================================================
@@ -603,6 +638,11 @@ export interface Database {
         Row: AgentPrompt;
         Insert: AgentPromptInsert;
         Update: AgentPromptUpdate;
+      };
+      agent_templates: {
+        Row: AgentTemplate;
+        Insert: AgentTemplateInsert;
+        Update: AgentTemplateUpdate;
       };
     };
   };

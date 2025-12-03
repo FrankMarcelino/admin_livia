@@ -6,7 +6,9 @@
       "Bash(npx shadcn@latest add:*)",
       "Bash(npm run build:*)",
       "Bash(npm run dev:*)",
-      "Bash(node extract-schema.js:*)"
+      "Bash(node extract-schema.js:*)",
+      "Bash(npm install:*)",
+      "Bash(npx supabase:*)"
     ],
     "deny": [],
     "ask": []
