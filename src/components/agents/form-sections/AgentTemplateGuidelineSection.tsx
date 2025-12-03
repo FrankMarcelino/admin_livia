@@ -7,7 +7,6 @@ import { UseFormReturn, useFieldArray } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -105,10 +104,10 @@ export function AgentTemplateGuidelineSection({
         </Button>
       </div>
 
-      <FormDescription className="text-xs">
+      <p className="text-xs text-muted-foreground">
         💡 <strong>Dica:</strong> Organize o atendimento em etapas sequenciais.
         Cada etapa pode ter múltiplas instruções.
-      </FormDescription>
+      </p>
     </div>
   )
 }
@@ -191,7 +190,9 @@ function StepCard({
 
           {/* Sub-instruções */}
           <div className="space-y-2">
-            <FormLabel>Instruções desta Etapa</FormLabel>
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Instruções desta Etapa
+            </label>
             {substeps.map((substep, substepIndex) => (
               <FormField
                 key={substep.id}

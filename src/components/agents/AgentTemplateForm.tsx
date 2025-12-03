@@ -81,9 +81,31 @@ export function AgentTemplateForm({
     }
   }
 
+  // Get form errors for display
+  const limitationsError = form.formState.errors.limitations?.message
+  const hasErrors = Object.keys(form.formState.errors).length > 0
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        {/* Display form-level validation errors */}
+        {hasErrors && (
+          <div className="rounded-lg border border-destructive bg-destructive/10 p-4">
+            <p className="text-sm font-medium text-destructive mb-2">
+              Por favor, corrija os seguintes erros:
+            </p>
+            <ul className="text-sm text-destructive list-disc list-inside space-y-1">
+              {form.formState.errors.name && (
+                <li>{form.formState.errors.name.message}</li>
+              )}
+              {form.formState.errors.type && (
+                <li>{form.formState.errors.type.message}</li>
+              )}
+              {limitationsError && <li>{limitationsError}</li>}
+            </ul>
+          </div>
+        )}
+
         <Tabs defaultValue="basic" className="w-full">
           <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="basic">Básico</TabsTrigger>

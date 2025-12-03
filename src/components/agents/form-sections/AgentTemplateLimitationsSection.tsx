@@ -7,7 +7,6 @@ import { UseFormReturn, useFieldArray } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -103,10 +102,10 @@ export function AgentTemplateLimitationsSection({
         </Button>
       </div>
 
-      <FormDescription className="text-xs">
+      <p className="text-xs text-muted-foreground">
         💡 <strong>Dica:</strong> Limitações ajudam a definir os limites de atuação do
         agent. Pelo menos 1 limitação ou 1 instrução deve ser definida.
-      </FormDescription>
+      </p>
     </div>
   )
 }
