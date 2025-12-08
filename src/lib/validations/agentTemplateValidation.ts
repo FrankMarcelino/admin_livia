@@ -1,13 +1,26 @@
 import { z } from 'zod'
 
 /**
+ * Guideline sub-instruction schema
+ * Each sub-instruction has content and active status
+ */
+const guidelineSubInstructionSchema = z.object({
+  content: z.string().min(1, 'Conteúdo da instrução não pode estar vazio'),
+  active: z.boolean()
+})
+
+/**
  * Guideline step schema
- * Each step must have a title and at least one instruction
+ * Each step must have a title, type (rank or markdown), active status, and at least one sub-instruction
  */
 const guidelineStepSchema = z.object({
   title: z.string().min(3, 'Título da etapa deve ter no mínimo 3 caracteres'),
-  steps: z
-    .array(z.string().min(1, 'Instrução não pode estar vazia'))
+  type: z.enum(['rank', 'markdown'], {
+    message: 'Tipo deve ser "rank" ou "markdown"'
+  }),
+  active: z.boolean(),
+  sub: z
+    .array(guidelineSubInstructionSchema)
     .min(1, 'Etapa deve ter pelo menos 1 instrução')
 })
 

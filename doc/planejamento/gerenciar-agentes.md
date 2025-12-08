@@ -88,26 +88,48 @@ Criar feature "Gerenciar Agentes" que permite:
   - Exemplo: `["Cumprimentar cliente pelo nome", "Ser sempre educado"]`
 
 - **Roteiro/Guide Line (JSONB Array de Objetos):**
-  - Fluxo em etapas estruturadas
+  - Fluxo em etapas estruturadas com tipo (rank/markdown) e controle de ativação
+  - **✅ Estrutura Atualizada (2025-12-03)**
   - Exemplo:
     ```json
     [
       {
-        "title": "Etapa 1: Saudação e Identificação",
-        "steps": [
-          "Saudar o cliente de forma amigável e profissional",
-          "Perguntar o nome e o motivo do contato"
+        "title": "Roteiro de Suporte",
+        "type": "rank",
+        "active": true,
+        "sub": [
+          {
+            "content": "Identifique o motivo do contato no histórico anterior",
+            "active": true
+          },
+          {
+            "content": "SE for Boleto: Informe o link do portal",
+            "active": true
+          },
+          {
+            "content": "Finalize com empatia",
+            "active": false
+          }
         ]
       },
       {
-        "title": "Etapa 2: Resolução do Problema",
-        "steps": [
-          "Buscar solução na base de conhecimento",
-          "Se não encontrar, transferir para atendente humano"
+        "title": "Instruções Operacionais",
+        "type": "markdown",
+        "active": true,
+        "sub": [
+          {
+            "content": "*Formatação:* Respostas curtas. Use emojis 🛠",
+            "active": true
+          }
         ]
       }
     ]
     ```
+  - **Campos:**
+    - `title`: Título da etapa
+    - `type`: "rank" (numerado) ou "markdown" (formatado)
+    - `active`: Se a etapa está ativa
+    - `sub`: Array de objetos `{content: string, active: boolean}`
 
 - **Regras/Rules (JSONB):**
   - Regras gerais de comportamento

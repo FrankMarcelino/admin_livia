@@ -1,6 +1,9 @@
 /**
  * TenantForm Component
  * Formulário de criação/edição de tenants com validação
+ * Estrutura hierárquica de tabs:
+ * - Nível 1 (Main): TENANT | CHANNELS | USUÁRIOS
+ * - Nível 2 (Sub): Dentro de cada main tab
  */
 
 import { useForm } from 'react-hook-form'
@@ -14,10 +17,9 @@ import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Loader2 } from 'lucide-react'
-import { BasicInfoFields } from './form-sections/BasicInfoFields'
-import { TechnicalResponsibleFields } from './form-sections/TechnicalResponsibleFields'
-import { FinancialResponsibleFields } from './form-sections/FinancialResponsibleFields'
-import { ConfigurationFields } from './form-sections/ConfigurationFields'
+import { TenantInfoTab } from './tabs/TenantInfoTab'
+import { ChannelsTab } from './tabs/ChannelsTab'
+import { UsersTab } from './tabs/UsersTab'
 
 interface TenantFormProps {
   tenant?: TenantWithRelations | null
@@ -122,32 +124,31 @@ export function TenantForm({ tenant, onSuccess, onCancel }: TenantFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <Tabs defaultValue="basic" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="basic">Básico</TabsTrigger>
-            <TabsTrigger value="tech">Téc. Responsável</TabsTrigger>
-            <TabsTrigger value="finance">Fin. Responsável</TabsTrigger>
-            <TabsTrigger value="config">Configurações</TabsTrigger>
+        {/* MAIN TABS - NÍVEL 1 */}
+        <Tabs defaultValue="tenant" className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="tenant">Tenant</TabsTrigger>
+            <TabsTrigger value="channels">Channels</TabsTrigger>
+            <TabsTrigger value="users" disabled>Usuários</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="basic" className="space-y-4 mt-4">
-            <BasicInfoFields form={form} />
-          </TabsContent>
-
-          <TabsContent value="tech" className="space-y-4 mt-4">
-            <TechnicalResponsibleFields form={form} />
-          </TabsContent>
-
-          <TabsContent value="finance" className="space-y-4 mt-4">
-            <FinancialResponsibleFields form={form} />
-          </TabsContent>
-
-          <TabsContent value="config" className="space-y-4 mt-4">
-            <ConfigurationFields
+          {/* TAB 1: TENANT INFO (com sub-tabs) */}
+          <TabsContent value="tenant">
+            <TenantInfoTab
               form={form}
               neurocores={neurocores}
               niches={niches}
             />
+          </TabsContent>
+
+          {/* TAB 2: CHANNELS */}
+          <TabsContent value="channels">
+            <ChannelsTab tenantId={tenant?.id} />
+          </TabsContent>
+
+          {/* TAB 3: USERS (Placeholder) */}
+          <TabsContent value="users">
+            <UsersTab tenantId={tenant?.id} />
           </TabsContent>
         </Tabs>
 

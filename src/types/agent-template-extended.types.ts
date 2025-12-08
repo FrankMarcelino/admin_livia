@@ -1,12 +1,33 @@
 import { AgentFunction } from './database.types'
 
 /**
+ * Sub-instruction within a guideline step
+ */
+export interface GuidelineSubInstruction {
+  content: string
+  active: boolean
+}
+
+/**
  * Guideline step structure for agent templates
- * Each step has a title and an array of instructions
+ * Each step has a title, type (rank or markdown), active status, and sub-instructions
+ *
+ * @example
+ * {
+ *   title: "Roteiro de Suporte",
+ *   type: "rank",
+ *   active: true,
+ *   sub: [
+ *     { content: "Identifique o motivo", active: true },
+ *     { content: "SE for Boleto: informe link", active: true }
+ *   ]
+ * }
  */
 export interface GuidelineStep {
   title: string
-  steps: string[]
+  type: 'rank' | 'markdown'
+  active: boolean
+  sub: GuidelineSubInstruction[]
 }
 
 /**

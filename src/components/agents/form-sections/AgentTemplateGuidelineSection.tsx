@@ -1,6 +1,7 @@
 /**
  * AgentTemplateGuidelineSection
  * Seção de roteiro/guideline com etapas e sub-instruções
+ * Nova estrutura: type (rank/markdown), active, sub com objetos {content, active}
  */
 
 import { UseFormReturn, useFieldArray } from 'react-hook-form'
@@ -13,6 +14,14 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/switch'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Plus, Trash2, ChevronDown, ChevronRight } from 'lucide-react'
 import { AgentTemplateCreateInput } from '@/types/agent-template-extended.types'
@@ -45,7 +54,12 @@ export function AgentTemplateGuidelineSection({
   }
 
   const handleAddStep = () => {
-    appendStep({ title: '', steps: [''] })
+    appendStep({
+      title: '',
+      type: 'rank',
+      active: true,
+      sub: [{ content: '', active: true }]
+    })
     // Expand the newly added step
     setExpandedSteps((prev) => new Set([...prev, steps.length]))
   }
@@ -106,7 +120,7 @@ export function AgentTemplateGuidelineSection({
 
       <p className="text-xs text-muted-foreground">
         💡 <strong>Dica:</strong> Organize o atendimento em etapas sequenciais.
-        Cada etapa pode ter múltiplas instruções.
+        Use "rank" para numeração e "markdown" para formatação.
       </p>
     </div>
   )
@@ -130,17 +144,18 @@ function StepCard({
   onToggleExpanded,
   onRemove
 }: StepCardProps) {
-  const { fields: substeps, append, remove } = useFieldArray({
+  const { fields: subInstructions, append, remove } = useFieldArray({
     control: form.control,
-    name: `guide_line.${stepIndex}.steps`
+    name: `guide_line.${stepIndex}.sub`
   })
 
   const stepTitle = form.watch(`guide_line.${stepIndex}.title`)
+  const stepActive = form.watch(`guide_line.${stepIndex}.active`)
 
   return (
-    <Card>
+    <Card className={!stepActive ? 'opacity-60' : ''}>
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <button
             type="button"
             onClick={onToggleExpanded}
@@ -153,6 +168,7 @@ function StepCard({
             )}
             <CardTitle className="text-base">
               {stepTitle || `Etapa ${stepIndex + 1}`}
+              {!stepActive && <span className="ml-2 text-xs text-muted-foreground">(Inativa)</span>}
             </CardTitle>
           </button>
           <Button
@@ -179,7 +195,7 @@ function StepCard({
                 <FormLabel>Título da Etapa</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Ex: Etapa 1: Saudação e Identificação"
+                    placeholder="Ex: Roteiro de Suporte"
                     {...field}
                   />
                 </FormControl>
@@ -188,49 +204,122 @@ function StepCard({
             )}
           />
 
+          <div className="grid grid-cols-2 gap-4">
+            {/* Tipo */}
+            <FormField
+              control={form.control}
+              name={`guide_line.${stepIndex}.type`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tipo</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o tipo" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="rank">
+                        Rank (numerado)
+                      </SelectItem>
+                      <SelectItem value="markdown">
+                        Markdown (formatado)
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Status Ativo */}
+            <FormField
+              control={form.control}
+              name={`guide_line.${stepIndex}.active`}
+              render={({ field }) => (
+                <FormItem className="flex flex-col justify-end">
+                  <FormLabel>Status</FormLabel>
+                  <div className="flex items-center space-x-2 rounded-lg border p-3">
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <span className="text-sm">
+                      {field.value ? 'Ativa' : 'Inativa'}
+                    </span>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
           {/* Sub-instruções */}
           <div className="space-y-2">
             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Instruções desta Etapa
             </label>
-            {substeps.map((substep, substepIndex) => (
-              <FormField
-                key={substep.id}
-                control={form.control}
-                name={`guide_line.${stepIndex}.steps.${substepIndex}`}
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="flex gap-2">
+            {subInstructions.map((subInstruction, subIndex) => (
+              <div key={subInstruction.id} className="flex gap-2 items-start">
+                <FormField
+                  control={form.control}
+                  name={`guide_line.${stepIndex}.sub.${subIndex}.content`}
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
                       <FormControl>
                         <Input
-                          placeholder={`Ex: Saudar o cliente de forma amigável`}
+                          placeholder="Ex: Identifique o motivo do contato"
                           {...field}
                         />
                       </FormControl>
-                      {substeps.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => remove(substepIndex)}
-                          className="shrink-0"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          <span className="sr-only">Remover instrução</span>
-                        </Button>
-                      )}
-                    </div>
-                    <FormMessage />
-                  </FormItem>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name={`guide_line.${stepIndex}.sub.${subIndex}.active`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="flex items-center h-10">
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            className="data-[state=unchecked]:opacity-50"
+                          />
+                        </div>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                {subInstructions.length > 1 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => remove(subIndex)}
+                    className="shrink-0"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    <span className="sr-only">Remover instrução</span>
+                  </Button>
                 )}
-              />
+              </div>
             ))}
 
             <Button
               type="button"
               variant="ghost"
               size="sm"
-              onClick={() => append('')}
+              onClick={() => append({ content: '', active: true })}
               className="w-full"
             >
               <Plus className="mr-2 h-4 w-4" />
