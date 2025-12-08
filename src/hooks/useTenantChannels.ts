@@ -5,16 +5,10 @@
 
 import { useState, useEffect } from 'react'
 import { fetchTenantChannels } from '@/lib/queries/tenant'
-
-interface Channel {
-  id: string
-  name: string
-  type: string
-  is_active: boolean
-}
+import type { ChannelWithProvider } from '@/lib/queries/channel'
 
 interface UseTenantChannelsReturn {
-  channels: Channel[]
+  channels: ChannelWithProvider[]
   isLoading: boolean
   error: string | null
   refetch: () => Promise<void>
@@ -26,7 +20,7 @@ interface UseTenantChannelsReturn {
  * @returns Lista de canais, loading state, error e função refetch
  */
 export function useTenantChannels(tenantId: string | null): UseTenantChannelsReturn {
-  const [channels, setChannels] = useState<Channel[]>([])
+  const [channels, setChannels] = useState<ChannelWithProvider[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -43,7 +37,7 @@ export function useTenantChannels(tenantId: string | null): UseTenantChannelsRet
 
       try {
         const data = await fetchTenantChannels(tenantId)
-        setChannels(data as Channel[])
+        setChannels(data as ChannelWithProvider[])
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Erro ao buscar canais'
         setError(errorMessage)
@@ -64,7 +58,7 @@ export function useTenantChannels(tenantId: string | null): UseTenantChannelsRet
 
     try {
       const data = await fetchTenantChannels(tenantId)
-      setChannels(data as Channel[])
+      setChannels(data as ChannelWithProvider[])
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Erro ao buscar canais'
       setError(errorMessage)

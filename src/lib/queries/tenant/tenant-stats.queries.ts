@@ -27,14 +27,20 @@ export async function fetchTenantStats(tenantId: string) {
 }
 
 /**
- * Busca canais configurados de um tenant
+ * Busca canais configurados de um tenant com relacionamentos
  * @param tenantId - ID do tenant
- * @returns Lista de canais
+ * @returns Lista de canais com provider
  */
 export async function fetchTenantChannels(tenantId: string) {
   const { data, error } = await supabase
     .from('channels')
-    .select('id, name, type, is_active')
+    .select(`
+      *,
+      channel_provider:channel_providers(
+        id,
+        name
+      )
+    `)
     .eq('tenant_id', tenantId)
     .order('created_at', { ascending: false })
 

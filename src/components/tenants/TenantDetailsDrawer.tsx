@@ -337,29 +337,116 @@ export function TenantDetailsDrawer({
               Canais Configurados
             </h3>
             {isLoadingChannels ? (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {[1, 2, 3].map((i) => (
-                  <Skeleton key={i} className="h-12 w-full" />
-                ))}
-              </div>
-            ) : channels.length > 0 ? (
-              <div className="space-y-2">
-                {channels.map((channel) => (
-                  <Card key={channel.id} className="p-3">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-medium">{channel.name}</p>
-                        <p className="text-xs text-muted-foreground capitalize">{channel.type}</p>
-                      </div>
-                      <Badge variant={channel.is_active ? 'default' : 'secondary'}>
-                        {channel.is_active ? 'Ativo' : 'Inativo'}
-                      </Badge>
+                  <Card key={i} className="p-4">
+                    <Skeleton className="h-5 w-32 mb-2" />
+                    <Skeleton className="h-4 w-24 mb-3" />
+                    <div className="flex gap-2">
+                      <Skeleton className="h-5 w-16" />
+                      <Skeleton className="h-5 w-20" />
                     </div>
                   </Card>
                 ))}
               </div>
+            ) : channels.length > 0 ? (
+              <div className="space-y-3">
+                {channels.map((channel) => (
+                  <Card key={channel.id} className="p-4">
+                    {/* Header */}
+                    <div className="mb-3">
+                      <h4 className="font-semibold text-base">{channel.name}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        {channel.identification_number}
+                      </p>
+                    </div>
+
+                    {/* Status Badges */}
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                      <Badge variant={channel.is_active ? 'default' : 'secondary'}>
+                        {channel.is_active ? (
+                          <>
+                            <MessageSquare className="mr-1 h-3 w-3" /> Ativo
+                          </>
+                        ) : (
+                          <>
+                            <PowerOff className="mr-1 h-3 w-3" /> Inativo
+                          </>
+                        )}
+                      </Badge>
+
+                      {channel.is_receiving_messages && (
+                        <Badge variant="outline" className="text-green-600 border-green-600">
+                          <MessageSquare className="mr-1 h-3 w-3" />
+                          Recebendo
+                        </Badge>
+                      )}
+
+                      {channel.is_sending_messages && (
+                        <Badge variant="outline" className="text-blue-600 border-blue-600">
+                          <MessageCircle className="mr-1 h-3 w-3" />
+                          Enviando
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* Detalhes */}
+                    <div className="space-y-1 text-sm">
+                      <p className="text-muted-foreground">
+                        <span className="font-medium">Instância:</span>{' '}
+                        {channel.instance_company_name}
+                      </p>
+                      {channel.channel_provider && (
+                        <p className="text-muted-foreground">
+                          <span className="font-medium">Provedor:</span>{' '}
+                          {channel.channel_provider.name}
+                        </p>
+                      )}
+                      {channel.observations && (
+                        <p className="text-muted-foreground">
+                          <span className="font-medium">Observações:</span>{' '}
+                          {channel.observations}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Configurações Técnicas (colapsadas) */}
+                    <details className="text-xs text-muted-foreground mt-2">
+                      <summary className="cursor-pointer hover:text-foreground">
+                        Ver configurações técnicas
+                      </summary>
+                      <div className="mt-2 space-y-1 pl-4 border-l-2 border-muted">
+                        <p>
+                          <span className="font-medium">API URL:</span>{' '}
+                          <span className="break-all">{channel.external_api_url}</span>
+                        </p>
+                        <p>
+                          <span className="font-medium">ID Externo:</span>{' '}
+                          {channel.provider_external_channel_id}
+                        </p>
+                        <p>
+                          <span className="font-medium">Tempo de Espera:</span>{' '}
+                          {channel.message_wait_time_fragments}s
+                        </p>
+                        {channel.identification_channel_client_descriptions && (
+                          <p>
+                            <span className="font-medium">Descrição do Cliente:</span>{' '}
+                            {String(channel.identification_channel_client_descriptions)}
+                          </p>
+                        )}
+                      </div>
+                    </details>
+                  </Card>
+                ))}
+              </div>
             ) : (
-              <p className="text-sm text-muted-foreground">Nenhum canal configurado</p>
+              <div className="text-center py-8">
+                <Radio className="h-12 w-12 mx-auto text-muted-foreground/50 mb-2" />
+                <p className="text-sm text-muted-foreground">Nenhum canal configurado</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Adicione canais WhatsApp na aba Channels ao editar esta empresa
+                </p>
+              </div>
             )}
           </div>
 
