@@ -1,14 +1,14 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Layout from "@/components/layout/Layout"
-import { TenantListPage } from "@/pages/tenants/TenantListPage"
-import { NeurocoreListPage } from "@/pages/neurocores/NeurocoreListPage"
-import { NeurocoreDebugPage } from "@/pages/neurocores/NeurocoreDebugPage"
-import { AgentTemplateListPage } from "@/pages/agents/AgentTemplateListPage"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "@/components/layout/Layout";
+import { TenantListPage } from "@/pages/tenants/TenantListPage";
+import { NeurocoreListPage } from "@/pages/neurocores/NeurocoreListPage";
+import { NeurocoreDebugPage } from "@/pages/neurocores/NeurocoreDebugPage";
+import { AgentTemplateListPage } from "@/pages/agents/AgentTemplateListPage";
 
 // Placeholder pages
-const Dashboard = () => <div className="p-4">Dashboard Content</div>
-const Feedbacks = () => <div className="p-4">Gerenciar Feedbacks</div>
-const Profile = () => <div className="p-4">Meu Perfil</div>
+const Dashboard = () => <div className="p-4">Dashboard Content</div>;
+const Feedbacks = () => <div className="p-4">Gerenciar Feedbacks</div>;
+const Profile = () => <div className="p-4">Meu Perfil</div>;
 
 function App() {
   return (
@@ -20,12 +20,12 @@ function App() {
           <Route path="feedbacks" element={<Feedbacks />} />
           <Route path="neurocores" element={<NeurocoreListPage />} />
           <Route path="neurocores/debug" element={<NeurocoreDebugPage />} />
-          <Route path="agentes" element={<AgentTemplateListPage />} />
+          {/* <Route path="agentes" element={<AgentTemplateListPage />} /> */}
           <Route path="perfil" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

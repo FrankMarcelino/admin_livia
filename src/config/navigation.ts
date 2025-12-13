@@ -28,11 +28,11 @@ export const navigation = [
     url: "/neurocores",
     icon: Cpu,
   },
-  {
-    title: "Gerenciar Agentes",
-    url: "/agentes",
-    icon: Bot,
-  },
+  // {
+  //   title: "Gerenciar Agentes",
+  //   url: "/agentes",
+  //   icon: Bot,
+  // },
 ]
 
 export const userNavigation = [
