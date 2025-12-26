@@ -24,7 +24,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { EmptyState } from '@/components/ui/empty-state'
 import { TenantWithRelations } from '@/types/tenant-extended.types'
 import { formatCNPJ } from '@/lib/validations/tenantValidation'
-import { MoreHorizontal, Eye, Edit, Power, PowerOff, Trash2, Building2 } from 'lucide-react'
+import { MoreHorizontal, Eye, Edit, Power, PowerOff, Trash2, Building2, Shield, Target, Settings } from 'lucide-react'
 import { format } from 'date-fns'
 
 interface TenantTableProps {
@@ -34,6 +34,10 @@ interface TenantTableProps {
   onView: (tenant: TenantWithRelations) => void
   onToggleStatus: (tenant: TenantWithRelations) => void
   onDelete: (tenant: TenantWithRelations) => void
+  onConfigureGuardRails: (tenant: TenantWithRelations) => void
+  onConfigureObserver: (tenant: TenantWithRelations) => void
+  onConfigureIntention: (tenant: TenantWithRelations) => void
+  onConfigureSystem: (tenant: TenantWithRelations) => void
 }
 
 export function TenantTable({
@@ -42,7 +46,11 @@ export function TenantTable({
   onEdit,
   onView,
   onToggleStatus,
-  onDelete
+  onDelete,
+  onConfigureGuardRails,
+  onConfigureObserver,
+  onConfigureIntention,
+  onConfigureSystem
 }: TenantTableProps) {
   // Plan badge variant
   const getPlanBadge = (plan: string) => {
@@ -178,6 +186,26 @@ export function TenantTable({
                           <Edit className="mr-2 h-4 w-4" />
                           Editar
                         </DropdownMenuItem>
+
+                        <DropdownMenuSeparator />
+
+                        <DropdownMenuItem onClick={() => onConfigureGuardRails(tenant)}>
+                          <Shield className="mr-2 h-4 w-4" />
+                          Guard Rails
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onConfigureObserver(tenant)}>
+                          <Eye className="mr-2 h-4 w-4" />
+                          Observador
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onConfigureIntention(tenant)}>
+                          <Target className="mr-2 h-4 w-4" />
+                          Intenção
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onConfigureSystem(tenant)}>
+                          <Settings className="mr-2 h-4 w-4" />
+                          Sistema
+                        </DropdownMenuItem>
+
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => onToggleStatus(tenant)}>
                           {tenant.is_active ? (

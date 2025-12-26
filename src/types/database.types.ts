@@ -539,6 +539,79 @@ export interface AgentTemplateInsert extends Omit<AgentTemplate, 'id' | 'created
 
 export interface AgentTemplateUpdate extends Partial<AgentTemplateInsert> {}
 
+/**
+ * AGENT_PROMPTS_GUARD_RAILS - Guard Rails prompts per tenant
+ * Table: agent_prompts_guard_rails
+ */
+export interface AgentPromptGuardRails {
+  id: number;  // BIGINT GENERATED ALWAYS AS IDENTITY
+  created_at: Timestamp;
+  prompt_jailbreak: string | null;
+  prompt_nsfw: string | null;
+  id_agent: UUID | null;  // FK to agents
+  id_tenant: UUID | null;  // FK to tenants (NULL = default)
+}
+
+export interface AgentPromptGuardRailsInsert extends Omit<AgentPromptGuardRails, 'id' | 'created_at'> {
+  created_at?: Timestamp;
+}
+
+export interface AgentPromptGuardRailsUpdate extends Partial<AgentPromptGuardRailsInsert> {}
+
+/**
+ * AGENT_PROMPTS_OBSERVER - Observer prompts per tenant
+ * Table: agent_prompts_observer
+ */
+export interface AgentPromptObserver {
+  id: number;  // BIGINT GENERATED ALWAYS AS IDENTITY
+  created_at: Timestamp;
+  prompt: string | null;
+  id_agent: UUID | null;  // FK to agents
+  id_tenant: UUID | null;  // FK to tenants (NULL = default)
+}
+
+export interface AgentPromptObserverInsert extends Omit<AgentPromptObserver, 'id' | 'created_at'> {
+  created_at?: Timestamp;
+}
+
+export interface AgentPromptObserverUpdate extends Partial<AgentPromptObserverInsert> {}
+
+/**
+ * AGENT_PROMPTS_INTENTION - Intention prompts per tenant
+ * Table: agent_prompts_intention
+ */
+export interface AgentPromptIntention {
+  id: number;  // BIGINT GENERATED ALWAYS AS IDENTITY
+  created_at: Timestamp;
+  prompt: string | null;
+  id_agent: UUID | null;  // FK to agents
+  id_tenant: UUID | null;  // FK to tenants (NULL = default)
+}
+
+export interface AgentPromptIntentionInsert extends Omit<AgentPromptIntention, 'id' | 'created_at'> {
+  created_at?: Timestamp;
+}
+
+export interface AgentPromptIntentionUpdate extends Partial<AgentPromptIntentionInsert> {}
+
+/**
+ * AGENT_PROMPTS_SYSTEM - System prompts per tenant
+ * Table: agent_prompts_system (será criada pela migration)
+ */
+export interface AgentPromptSystem {
+  id: number;  // BIGINT GENERATED ALWAYS AS IDENTITY
+  created_at: Timestamp;
+  prompt: string | null;
+  id_agent: UUID | null;  // FK to agents
+  id_tenant: UUID | null;  // FK to tenants (NULL = default)
+}
+
+export interface AgentPromptSystemInsert extends Omit<AgentPromptSystem, 'id' | 'created_at'> {
+  created_at?: Timestamp;
+}
+
+export interface AgentPromptSystemUpdate extends Partial<AgentPromptSystemInsert> {}
+
 // ============================================================================
 // DATABASE TYPE
 // ============================================================================
@@ -643,6 +716,26 @@ export interface Database {
         Row: AgentTemplate;
         Insert: AgentTemplateInsert;
         Update: AgentTemplateUpdate;
+      };
+      agent_prompts_guard_rails: {
+        Row: AgentPromptGuardRails;
+        Insert: AgentPromptGuardRailsInsert;
+        Update: AgentPromptGuardRailsUpdate;
+      };
+      agent_prompts_observer: {
+        Row: AgentPromptObserver;
+        Insert: AgentPromptObserverInsert;
+        Update: AgentPromptObserverUpdate;
+      };
+      agent_prompts_intention: {
+        Row: AgentPromptIntention;
+        Insert: AgentPromptIntentionInsert;
+        Update: AgentPromptIntentionUpdate;
+      };
+      agent_prompts_system: {
+        Row: AgentPromptSystem;
+        Insert: AgentPromptSystemInsert;
+        Update: AgentPromptSystemUpdate;
       };
     };
   };

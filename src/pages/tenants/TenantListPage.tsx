@@ -22,6 +22,8 @@ import {
 } from '@/components/ui/tooltip'
 import { Plus, RefreshCw } from 'lucide-react'
 import { TenantWithRelations } from '@/types/tenant-extended.types'
+import { PromptFormDialog } from '@/components/tenants/prompts/PromptFormDialog'
+import type { PromptType } from '@/types/agent-prompts.types'
 
 export function TenantListPage() {
   // Store
@@ -55,6 +57,9 @@ export function TenantListPage() {
   const [selectedTenantForView, setSelectedTenantForView] = useState<TenantWithRelations | null>(null)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [selectedTenantForDelete, setSelectedTenantForDelete] = useState<TenantWithRelations | null>(null)
+  const [promptDialogOpen, setPromptDialogOpen] = useState(false)
+  const [currentPromptType, setCurrentPromptType] = useState<PromptType | null>(null)
+  const [selectedTenantForPrompt, setSelectedTenantForPrompt] = useState<TenantWithRelations | null>(null)
 
   // Fetch tenants on mount and when filters change
   useEffect(() => {
@@ -144,6 +149,18 @@ export function TenantListPage() {
     setIsDeleteOpen(true)
   }
 
+  const handleConfigurePrompt = (tenant: TenantWithRelations, type: PromptType) => {
+    setSelectedTenantForPrompt(tenant)
+    setCurrentPromptType(type)
+    setPromptDialogOpen(true)
+  }
+
+  const handlePromptDialogClose = () => {
+    setPromptDialogOpen(false)
+    setCurrentPromptType(null)
+    setSelectedTenantForPrompt(null)
+  }
+
   const handleDeleteClose = () => {
     setIsDeleteOpen(false)
     setSelectedTenantForDelete(null)
@@ -217,6 +234,10 @@ export function TenantListPage() {
           onView={handleView}
           onToggleStatus={handleToggleStatus}
           onDelete={handleDelete}
+          onConfigureGuardRails={(t) => handleConfigurePrompt(t, 'guard_rails')}
+          onConfigureObserver={(t) => handleConfigurePrompt(t, 'observer')}
+          onConfigureIntention={(t) => handleConfigurePrompt(t, 'intention')}
+          onConfigureSystem={(t) => handleConfigurePrompt(t, 'system')}
         />
       </Card>
 
@@ -270,6 +291,17 @@ export function TenantListPage() {
         onOpenChange={handleDeleteClose}
         onConfirm={handleDeleteConfirm}
       />
+
+      {/* Prompt Configuration Dialog */}
+      {promptDialogOpen && currentPromptType && selectedTenantForPrompt && (
+        <PromptFormDialog
+          open={promptDialogOpen}
+          onClose={handlePromptDialogClose}
+          promptType={currentPromptType}
+          tenantId={selectedTenantForPrompt.id}
+          tenantName={selectedTenantForPrompt.name}
+        />
+      )}
       </div>
     </TooltipProvider>
   )
