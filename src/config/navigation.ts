@@ -3,7 +3,6 @@ import {
   Building2,
   MessageSquare,
   Cpu,
-  Bot,
   User,
 } from "lucide-react"
 

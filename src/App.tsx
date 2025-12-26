@@ -3,7 +3,6 @@ import Layout from "@/components/layout/Layout";
 import { TenantListPage } from "@/pages/tenants/TenantListPage";
 import { NeurocoreListPage } from "@/pages/neurocores/NeurocoreListPage";
 import { NeurocoreDebugPage } from "@/pages/neurocores/NeurocoreDebugPage";
-import { AgentTemplateListPage } from "@/pages/agents/AgentTemplateListPage";
 
 // Placeholder pages
 const Dashboard = () => <div className="p-4">Dashboard Content</div>;
